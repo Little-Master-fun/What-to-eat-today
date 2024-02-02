@@ -9,11 +9,19 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@unocss/reset": "^0.58.4",
+    "@vueuse/core": "^10.7.2",
+    "axios": "^1.6.7",
+    "element-plus": "^2.5.3",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.6.3",
     "@vitejs/plugin-vue": "^4.5.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "^3.2.4",
     "vite": "^5.0.10"
   }
 }
