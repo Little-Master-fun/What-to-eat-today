@@ -9,10 +9,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@unocss/reset": "^0.58.4",
     "@vueuse/core": "^10.7.2",
     "axios": "^1.6.7",
     "element-plus": "^2.5.3",
+    "swiper": "^11.1.9",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },

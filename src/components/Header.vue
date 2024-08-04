@@ -1,56 +1,74 @@
-<script setup>
-import { useUserState } from '@/composables/state';
-import { useLocalStorage } from '@vueuse/core';
-import { ElButton } from 'element-plus';
+<script>
 import { RouterLink ,useRouter} from 'vue-router';
+import { Location } from '@element-plus/icons-vue';
 
-const router=useRouter();
-const userState = useUserState()
-
-function handleClickLogin(){
-    router.push('/login')
+export default {
+  components: {
+    Location
+  }
 }
-
-function handleClickLogout(){
-    useLocalStorage = {}
-}
-
 </script>
 <template>
-    <div class="header-container">
-        <router-link to="/" class="header">Simple BBS</router-link>
+    <div class="header">
+        <el-row>
+            <el-col :span="12" style="padding-left: 10vw;">
+                <el-text class="mx-1" size="small" :style="{ fontWeight: 'bold' }">9：00</el-text>
+            </el-col>
+            <el-col :span="12"><div class="grid-content ep-bg-purple-light" /></el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24" style="padding-left: 5vw;">
+                <el-icon><Location /></el-icon>
+                <el-text class="mx-1" size="small">山东大学（兴隆山校区）</el-text>
+            </el-col>
+        </el-row>
+        <el-row>
+            <el-col :span="24" style="padding-left: 5vw;">
+                <div style="display: flex;" class="searchBox">
+                    <input type="text" style="border-radius: 0px; width: 80vw; margin-left: 15px;"/>
+                    <div class="searchButton">
+                        <el-text  size="small" style="color: black;">搜索</el-text>
+                    </div>
+                </div>
+            </el-col>
+        </el-row>
 
-        <el-button 
-        v-if="!userState.userID"
-        link type="primary" 
-        class="header-login-btn" 
-        @click="handleClickLogin">
-        Login
-        </el-button>
-
-        <template v-else>
-            <div class="HeaderButton">
-                <el-button type="primary" link @click="router.push('/createpost')">CreatePost</el-button>
-                <div style="margin: 0 1rem;">{{ userState.username }}</div>  
-                <el-button link type="danger" @click="handleClickLogout">Exit</el-button>
-            </div>
-        </template>
     </div>
-    <!-- <router-view></router-view> -->
 </template>
 <style scoped>
-.header-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100%;
-    justify-content: space-between;
-
+input:focus {
+  outline: none;
 }
 .header{
-    font-size: 1.25rem;
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+    background-color: rgba(0, 0, 0, 0);  
 }
-.HeaderButton{
+.grid-content{
+    background-color: aliceblue;
+}
+.el-row{
+    height: 20%;
+    width: 100%;
+    padding-bottom: 5vh;
+}
+.searchBox{
+    border-radius: 20px; 
+    width: 90vw;
+    background-color: #fff;
+    position: relative;
+}
+.searchButton{
     display: flex;
+    width: 40px;
+    height: 20px;
+    text-align: center;
+    justify-content: center;
+    background-color: #FFE062;
+    border-radius: 20px; 
+    position: absolute;
+    top: 2px;
+    right: 2px;
 }
 </style>
