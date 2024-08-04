@@ -5,7 +5,7 @@ const src =
 </script>
 
 <template>
-    <div class="container">
+    <div class="contain">
         <el-row style="height: 5vh;">
             <el-col span="6">
                 <el-text style="padding-left: 10px;">9:40</el-text>
@@ -31,7 +31,7 @@ const src =
 </template>
 
 <style scoped>
-.container{
+.contain{
     height: 38vh;
     width: 100vw;
     background: linear-gradient(to bottom, #FFD93E, #fff);
