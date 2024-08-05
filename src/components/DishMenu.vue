@@ -6,6 +6,7 @@ const Floor = [
     { id: 1, name: '欣园一楼', path: '/'},
     { id: 2, name: '欣园二楼', path: '/dish'},
     { id: 3, name: '欣园三楼', path: '/user'},
+    { id: 3, name: '欣园三楼', path: '/user'},
   ];
 
 </script>

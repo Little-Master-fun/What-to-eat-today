@@ -1,6 +1,7 @@
 <script setup>
 import DishHeader from '../components/DishHeader.vue'
 import DishMenu from '../components/DishMenu.vue'
+import DishPresentation from '../components/DishPresentation.vue'
 </script>
 
 <template>
@@ -10,6 +11,9 @@ import DishMenu from '../components/DishMenu.vue'
         </div>
         <div class="dishMenu">
             <DishMenu></DishMenu>
+        </div>
+        <div class="dishPresentation">
+            <DishPresentation></DishPresentation>
         </div>
     </div>
 
@@ -21,7 +25,10 @@ import DishMenu from '../components/DishMenu.vue'
     height: 100vh;
     /* width: 100vw; */
 }
-.header{
+.header {
+    padding-bottom: 1vh;
+}
+.dishMenu{
     padding-bottom: 1vh;
 }
 </style>

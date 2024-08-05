@@ -4,14 +4,15 @@
         <div class="selectedDishes">
             <el-card style="background: linear-gradient(to bottom, rgba(255, 219, 74, 1), #fff); border-radius: 10px;">
                 <el-row>
-                <el-col :span="6">
+                <el-col :span="9" style="display: grid; place-items: center;">
+                    <el-image style="border-radius: 5px; margin-right: 10px;" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"/>
                 </el-col>
-                <el-col :span="18">
+                <el-col :span="15" style="">
                      <el-row>
-                        <el-text style="color: black;" size="large"><strong>随机选菜</strong></el-text>
+                        <el-text style="color: black; margin-left: 2vw;" size="large" ><strong>随机选菜</strong></el-text>
                      </el-row>
                      <el-row>
-                        <el-text size="small">不知道吃什么，我们来帮你选</el-text>
+                        <el-text size="small" style="margin-top: 2vh;">不知道吃什么，我们来帮你选</el-text>
                      </el-row>
                 </el-col>
                 </el-row>

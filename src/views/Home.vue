@@ -38,6 +38,10 @@ export default {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 10px;
+  -ms-overflow-style: none;  /* 针对IE、Edge浏览器 */
+  scrollbar-width: none;  /* 针对Firefox浏览器 */
 }
-
+.el-main::-webkit-scrollbar {
+  display: none; /* 针对Webkit浏览器 */
+}
 </style>
