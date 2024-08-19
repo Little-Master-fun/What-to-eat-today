@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <Swiper></Swiper>
-        <div class="selectedDishes">
+        <div class="selectedDishes" @click="">
             <el-card style="background: linear-gradient(to bottom, rgba(255, 219, 74, 1), #fff); border-radius: 10px;">
                 <el-row>
                 <el-col :span="9" style="display: grid; place-items: center;">

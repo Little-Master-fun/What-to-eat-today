@@ -28,6 +28,7 @@ export default {
 .common-layout{
   width: 100%;
   height: 100vh;
+  position: relative;
   /* background-color: #FFDB4A; */
   background: linear-gradient(to bottom, #FFE062, #F5F5F5);
 }

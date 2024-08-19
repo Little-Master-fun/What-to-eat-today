@@ -24,14 +24,13 @@
     </div>
   </template>
   
-  <script setup>
-  import router from '@/router';
+<script setup>
+import router from '@/router';
 import { ref } from 'vue';
-//   import { SvgIcon } from '@element-plus/icons-vue';  
 
   const navItems = [
     { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/'},
-    { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish'},
+    { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/RandomDish'},
     { id: 3, name: '我的', icon: '/src/components/icon/Group.png', path: '/user'},
   ];
   

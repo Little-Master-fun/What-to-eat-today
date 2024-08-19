@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import User from '../views/User.vue'
 import Dish from '../views/Dish.vue'
+import RandomDish from '../views/RandomlySelectedDishes.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -17,6 +18,10 @@ const router = createRouter({
     {
       path:'/dish',
       component:Dish
+    },
+    {
+      path:'/randomDish',
+      component:RandomDish
     }
   ],
 })
