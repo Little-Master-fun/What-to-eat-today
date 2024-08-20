@@ -33,7 +33,7 @@ export default {
   background: linear-gradient(to bottom, #FFE062, #F5F5F5);
 }
 .el-footer{
-  height: 8vh;
+  height: 7.1vh;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 0%;

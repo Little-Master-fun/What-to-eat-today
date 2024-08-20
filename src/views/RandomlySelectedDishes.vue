@@ -3,16 +3,19 @@ import { ref } from 'vue';
 import 'animate.css';
 
 
-const studentName = ref('随机选菜');
+const dishName = ref('随机选菜');
 const isRandomizing = ref(false);
 const intervalId = ref(null)
-const intervalDish = ref(null)
-const students = Array.from({ length: 10000 }, (_, index) => index + 1);
+const intervalDish1 = ref(null)
+const intervalDish2 = ref(null)
+const intervalDish3 = ref(null)
+const intervalDish4 = ref(null)
+const dishes = Array.from({ length: 10000 }, (_, index) => index + 1);
 
 const randomStudent = () => {
-    const randomIndex = Math.floor(Math.random() * students.length);
-    studentName.value = students[randomIndex];
-    const Dish = students[randomIndex]
+    const randomIndex = Math.floor(Math.random() * dishes.length);
+    dishName.value = dishes[randomIndex];
+    const Dish = dishes[randomIndex]
     return{ Dish }
 };
 
@@ -24,13 +27,22 @@ const toggleRandom = () => {
     if (isRandomizing.value) {
         isRandomizing.value = false;
         clearInterval(intervalId.value);
-        clearInterval(intervalDish.value)
+        clearInterval(intervalDish1.value)
+        clearInterval(intervalDish2.value)
+        clearInterval(intervalDish3.value)
+        clearInterval(intervalDish4.value)
         intervalId.value = null
-        intervalDish.value = null
+        intervalDish1.value = null
+        intervalDish2.value = null
+        intervalDish3.value = null
+        intervalDish4.value = null
         } else {
         isRandomizing.value = true;
         intervalId.value = setInterval(randomStudent, 50);
-        intervalDish.value = setInterval(randomBackground, 1000)
+        intervalDish1.value = setInterval(randomBackground, 500)
+        intervalDish2.value = setInterval(randomBackground, 500)
+        intervalDish3.value = setInterval(randomBackground, 500)
+        intervalDish4.value = setInterval(randomBackground, 500)
         }
 };
 
@@ -56,24 +68,26 @@ const randomBackground = () => {
     dish.style.left = x + 'px';
     dish.style.top = y + 'px';
     dish.style.position = 'absolute'
+    dish.style.zIndex = '0'
     dish.style.fontSize = fontSize + 'px';
 
 
-    document.querySelector('.common-layout').appendChild(dish);
+    document.querySelector('.backgroundBox').appendChild(dish);
 
     setTimeout(() => {
         dish.remove()
-    }, 4000);
+    }, 3000);
 }
 
 </script>
 
 <template>
+  <div class="backgroundBox">
     <div class="randomBox">
-      <h1 class="animate__animated animate__bounce">651615</h1>
-        <h1 >{{ studentName }}</h1>
-        <el-button @click="toggleRandom">{{ isRandomizing? '停止选菜' : '开始选菜'}}</el-button>
+        <el-text style="font-size: 40px; color: #ff9900; position: relative; z-index: 2;">{{ dishName }}</el-text>
+        <el-button @click="toggleRandom" round style="background-color: #FFDB4A; position: relative; z-index: 2;">{{ isRandomizing? '停止选菜' : '开始选菜'}}</el-button>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -88,80 +102,19 @@ const randomBackground = () => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 2;
 }
 .el-button{
     display: block;
+    z-index: 2;
 }
 .dishBackground{
     position: absolute !important;
-    z-index: -1;
+}
+.backgroundBox{
+  width: 100vw;
+  height: 90vh;
 }
 </style>
 
 
-<!-- <template>
-    <div class="container">
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    data() {
-      return {};
-    },
-    mounted() {
-      this.startAddingRandomText();
-    },
-    methods: {
-      startAddingRandomText() {
-        const container = document.querySelector('.container');
-        const containerRect = container.getBoundingClientRect();
-  
-        const randomPosition = () => {
-          const x = Math.random() * (containerRect.width - 50);
-          const y = Math.random() * (containerRect.height - 50);
-  
-          return { x, y };
-        };
-  
-        const randomFontSize = () => {
-          return Math.random() * 30 + 10;
-        };
-  
-        const addRandomText = () => {
-          const text = document.createElement('div');
-          text.classList.add('text');
-          text.innerHTML = '随机文字';
-  
-          const { x, y } = randomPosition();
-          const fontSize = randomFontSize();
-  
-          text.style.left = x + 'px';
-          text.style.top = y + 'px';
-          text.style.position = 'absolute'
-          text.style.fontSize = fontSize + 'px';
-  
-          container.appendChild(text);
-  
-          setTimeout(() => {
-            text.remove();
-          }, 31000);
-        };
-  
-        setInterval(addRandomText, 1000);
-      }
-    }
-  }
-  </script>
-  
-  <style scoped>
-  .container {
-    position: relative;
-  }
-  
-  .text {
-    position: absolute;
-    font-size: 20px;
-    z-index: -1;
-  }
-  </style> -->

@@ -14,7 +14,7 @@
                     >
                     <!-- <el-icon :name="item.icon" /> -->
                      <div style="display: flex; flex-direction: column;align-items: center;">
-                      <img width="15px" :src="item.icon" alt="自定义图标" style="display: block;" />
+                      <img width="18px" :src="item.icon" alt="自定义图标" style="display: block;" />
                       <el-text class="mx-1" size="small">{{ item.name }}</el-text>
                     </div>
                     </el-button>
@@ -30,7 +30,7 @@ import { ref } from 'vue';
 
   const navItems = [
     { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/'},
-    { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/RandomDish'},
+    { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish'},
     { id: 3, name: '我的', icon: '/src/components/icon/Group.png', path: '/user'},
   ];
   

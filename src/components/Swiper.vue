@@ -58,8 +58,8 @@ body {
 }
 
 .swiper {
-  width: 100%;
-  height: 21vh;
+  width: 95.1vw;
+  height: 20.1vh;
   border-radius: 20px;
 }
 

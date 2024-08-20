@@ -10,22 +10,16 @@ export default {
 </script>
 <template>
     <div class="header">
-        <el-row>
-            <el-col :span="12" style="padding-left: 10vw;">
-                <el-text class="mx-1" size="small" :style="{ fontWeight: 'bold' }">9：00</el-text>
-            </el-col>
-            <el-col :span="12"><div class="grid-content ep-bg-purple-light" /></el-col>
-        </el-row>
-        <el-row>
+        <el-row style="height: 3.8vh; padding-bottom: 1.3vh;">
             <el-col :span="24" style="padding-left: 5vw;">
-                <el-icon><Location /></el-icon>
+                <el-icon style="font-size: 2.3vh;"><Location /></el-icon>
                 <el-text class="mx-1" size="small">山东大学（兴隆山校区）</el-text>
             </el-col>
         </el-row>
         <el-row>
             <el-col :span="24" style="padding-left: 5vw;">
                 <div style="display: flex;" class="searchBox">
-                    <input type="text" style="border-radius: 0px; width: 80vw; margin-left: 15px;"/>
+                    <input type="text" style="border-radius: 0px; width: 92.3vw;height: 4.5vh; margin-left: 15px; margin-right: 15px;"/>
                     <div class="searchButton">
                         <el-text  size="small" style="color: black;">搜索</el-text>
                     </div>
@@ -61,8 +55,8 @@ input:focus {
 }
 .searchButton{
     display: flex;
-    width: 40px;
-    height: 20px;
+    width: 14.4vw;
+    height: 3.8vh;
     text-align: center;
     justify-content: center;
     background-color: #FFE062;

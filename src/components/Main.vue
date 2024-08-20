@@ -4,10 +4,10 @@
         <div class="selectedDishes" @click="">
             <el-card style="background: linear-gradient(to bottom, rgba(255, 219, 74, 1), #fff); border-radius: 10px;">
                 <el-row>
-                <el-col :span="9" style="display: grid; place-items: center;">
-                    <el-image style="border-radius: 5px; margin-right: 10px;" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"/>
+                <el-col :span="9" style="display: grid; place-items: center;margin-right: 10px;">
+                    <el-image style="border-radius: 5px; padding-right: 5px;" src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"/>
                 </el-col>
-                <el-col :span="15" style="">
+                <el-col :span="15" style="margin-left: 10px;">
                      <el-row>
                         <el-text style="color: black; margin-left: 2vw;" size="large" ><strong>随机选菜</strong></el-text>
                      </el-row>
@@ -32,6 +32,7 @@ import Swiper from './Swiper.vue';
 </script>
 
 <style scoped>
+
 .container{
     background-color: rgba(0, 0, 0, 0);
     height: 100%;
@@ -45,7 +46,7 @@ import Swiper from './Swiper.vue';
     border-radius: 20px;
 }
 .canteen{
-    min-height: 36vh;
+    height: 45vh;
     margin-top: 2vh;
     border-radius: 15px;
 }

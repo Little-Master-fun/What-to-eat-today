@@ -9,7 +9,13 @@ const router = createRouter({
   routes: [ 
     {
       path:'/',
-      component:Home
+      component:Home,
+      children: [
+        {
+          path: 'selectdish',
+          component: RandomDish
+        }
+      ]
     },
     {
       path:'/user',
