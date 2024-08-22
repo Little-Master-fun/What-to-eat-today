@@ -1,4 +1,5 @@
 <script setup>
+import { useRouter } from 'vue-router';
 
 const Window = [
     { id: 1, name: '一号窗口', path: '/'},
@@ -10,6 +11,7 @@ const Window = [
     { id: 7, name: '七号窗口', path: '/user'},
     { id: 8, name: '八号窗口', path: '/user'},
   ];
+  const router = useRouter()
 
 const dish = 50
 </script>
@@ -44,7 +46,7 @@ const dish = 50
                      <el-row style="margin-top: 3vh;" justify="space-between">
                         <el-col span="6"><el-text size="small">价格</el-text></el-col>
                         <el-col span="10">
-                            <el-button class="changeButton" round><el-text size="small" style="color: black;">详细信息</el-text></el-button>
+                            <el-button class="changeButton" round @click="router.push('detail')"><el-text size="small" style="color: black;">详细信息</el-text></el-button>
                         </el-col>
                      </el-row>
                 </el-col>
@@ -58,7 +60,7 @@ const dish = 50
 
 <style scoped>
 .layout{
-    height: 43vh;
+    height: 44.5vh;
 }
 .el-menu-item {
   text-align: center;

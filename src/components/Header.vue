@@ -1,12 +1,9 @@
-<script>
+<script setup>
 import { RouterLink ,useRouter} from 'vue-router';
 import { Location } from '@element-plus/icons-vue';
 
-export default {
-  components: {
-    Location
-  }
-}
+const router = useRouter()
+
 </script>
 <template>
     <div class="header">
@@ -20,7 +17,7 @@ export default {
             <el-col :span="24" style="padding-left: 5vw;">
                 <div style="display: flex;" class="searchBox">
                     <input type="text" style="border-radius: 0px; width: 92.3vw;height: 4.5vh; margin-left: 15px; margin-right: 15px;"/>
-                    <div class="searchButton">
+                    <div class="searchButton" @click="router.push('search')">
                         <el-text  size="small" style="color: black;">搜索</el-text>
                     </div>
                 </div>

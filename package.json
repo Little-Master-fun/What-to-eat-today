@@ -17,7 +17,8 @@
     "element-plus": "^2.5.3",
     "swiper": "^11.1.9",
     "vue": "^3.3.11",
-    "vue-router": "^4.2.5"
+    "vue-router": "^4.2.5",
+    "vue-star-rating": "^2.1.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^2.6.3",

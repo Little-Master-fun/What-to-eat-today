@@ -63,7 +63,7 @@ const randomBackground = () => {
     const fontSize = randomFontSize();
     const interDish = randomStudent();
 
-    dish.innerHTML = 'sada';
+    dish.innerHTML = '菜';
 
     dish.style.left = x + 'px';
     dish.style.top = y + 'px';
@@ -85,7 +85,7 @@ const randomBackground = () => {
   <div class="backgroundBox">
     <div class="randomBox">
         <el-text style="font-size: 40px; color: #ff9900; position: relative; z-index: 2;">{{ dishName }}</el-text>
-        <el-button @click="toggleRandom" round style="background-color: #FFDB4A; position: relative; z-index: 2;">{{ isRandomizing? '停止选菜' : '开始选菜'}}</el-button>
+        <el-button @click="toggleRandom" round class="starButton">{{ isRandomizing? '停止选菜' : '开始选菜'}}</el-button>
     </div>
   </div>
 </template>
@@ -114,6 +114,16 @@ const randomBackground = () => {
 .backgroundBox{
   width: 100vw;
   height: 90vh;
+}
+.starButton{
+  background-color: #FFDB4A;
+  position: relative; 
+  z-index: 2;
+}
+.starButton:hover,
+.starButton:focus {
+  background-color: #FFDB4A;  /* 恢复初始背景色，取消点击时的颜色变化 */
+  color: initial;  /* 恢复初始文字颜色，取消点击时的颜色变化 */
 }
 </style>
 
