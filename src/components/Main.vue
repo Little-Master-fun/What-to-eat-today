@@ -1,5 +1,42 @@
+<script setup>
+import Swiper from "./Swiper.vue";
+import { useRouter } from "vue-router";
+import DishCard from "./DishCard.vue";
+import http from "@/utils/http";
+import { onMounted, ref} from "vue";
+import { HomeFilled} from '@element-plus/icons-vue'
+
+const count = ref(0)
+const router = useRouter();
+const dialogFormVisible = ref(false)
+
+async function getNewdish() {
+  const res = await http.get('/new/0')
+  console.log(res);
+}
+const handleClick = () => {
+  dialogFormVisible.value = true
+}
+const load = () => {
+  count.value += 2
+}
+
+onMounted(() => {
+    getNewdish()
+})
+
+</script>
+
+
+
 <template>
   <div class="container">
+    <el-button 
+    class="changeCateen"
+    :icon="HomeFilled"
+    circle
+    @click="handleClick()"
+    ></el-button>
     <Swiper></Swiper>
     <div>
       <el-card
@@ -30,19 +67,63 @@
       </el-card>
       <el-card class="canteen">
         <h1>食堂上新</h1>
+        <ul 
+        v-infinite-scroll="load" 
+        class="infinite-list" 
+        style="overflow: auto"
+        :infinite-scroll-disabled="disabled"
+        >
+          <li v-for="i in 10" :key="i" class="infinite-list-item">
+            <DishCard dish-name="黄焖鸡" dish-location="欣园二楼" dish-price="12" :dish-id="1"></DishCard>
+          </li>
+        </ul>
       </el-card>
     </div>
   </div>
+  <el-dialog v-model="dialogFormVisible" title="更换食堂" width="80vw">
+    <div class="iconBox">
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>食堂1</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>食堂</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>食堂</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>收藏</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>收藏</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>收藏</p>
+      </div>
+    </div>
+  </el-dialog>
+
 </template>
 
-<script setup>
-import Swiper from "./Swiper.vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-</script>
-
 <style scoped>
+.changeCateen{
+  position: absolute;
+  right: 20px;
+  top: 46vh;
+  color: rgb(255, 255, 255);
+  background-color: #ffe062;
+  border: none;
+}
+.infinite-list {
+  height: 35.5vh;
+  overflow: hidden;
+}
 .container {
   background-color: rgba(0, 0, 0, 0);
   height: 100%;
@@ -59,13 +140,28 @@ const router = useRouter();
   margin-left: 1.5vw;
 }
 .canteen {
-  min-height: 44vh;
+  max-height: 44vh;
   margin-top: 2vh;
   border-radius: 15px;
+  overflow: hidden;
 }
 .el-card {
   padding: 0px;
   box-shadow: none;
   border: none;
 }
+.icon-test {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 30%;
+  margin-right: 3%;
+  margin-bottom: 4vh;
+}
+.iconBox {
+  flex-wrap: wrap;
+  display: flex;
+}
+
 </style>

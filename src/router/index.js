@@ -5,6 +5,7 @@ import Dish from '../views/Dish.vue'
 import RandomDish from '../views/RandomlySelectedDishes.vue'
 import DetailDish from '@/views/DetailDish.vue'
 import SearchDish from '@/views/SearchDish.vue'
+import Collection from '@/views/Collection.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -32,6 +33,10 @@ const router = createRouter({
     {
       path:'/search',
       component:SearchDish
+    },
+    {
+      path:'/collection',
+      component:Collection
     }
   ],
 })

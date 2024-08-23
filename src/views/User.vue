@@ -1,4 +1,7 @@
-<script>
+<script setup>
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 </script>
 
@@ -18,7 +21,7 @@
             </el-col>
         </el-row>
         <el-card class="iconBox">
-            <div style="display: flex;">
+            <div style="display: flex;" @click="router.push('/collection')">
                 <div class="icon-test">
                     <img src="../components/icon/🦆 icon _star_.png" alt="star">
                     <p>收藏</p>

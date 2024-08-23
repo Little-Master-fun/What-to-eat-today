@@ -4,7 +4,6 @@ import { ref } from "vue";
 const src =
   "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg";
 const dialogFormVisible = ref(false);
-
 </script>
 
 <template>
@@ -33,11 +32,15 @@ const dialogFormVisible = ref(false);
     <div class="iconBox">
       <div class="icon-test">
         <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>收藏</p>
+        <p>食堂1</p>
       </div>
       <div class="icon-test">
         <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>收藏</p>
+        <p>食堂</p>
+      </div>
+      <div class="icon-test">
+        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+        <p>食堂</p>
       </div>
       <div class="icon-test">
         <img src="../components/icon/🦆 icon _star_.png" alt="star" />

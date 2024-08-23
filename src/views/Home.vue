@@ -1,10 +1,6 @@
 <script setup>
 import Header from "../components/Header.vue"
 import Main from "@/components/Main.vue";
-import Swiper from "../components/Swiper.vue";
-import router from "@/router";
-import { RouterLink ,useRouter} from 'vue-router';
-import { Location } from '@element-plus/icons-vue';
 
 
 

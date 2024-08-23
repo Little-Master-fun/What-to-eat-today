@@ -1,33 +1,9 @@
-
-<template>
-    <div class="container">
-        <div class="selectBox">
-            <el-row justify=center>
-                <el-col :span="6" v-for="item in navItems" :key="item.id">
-                    <el-button
-                    type="primary"
-                    :class="{ active: selectedId === item.id }"
-                    @click="handleClick(item)"
-                    color="rgba(0, 0, 0, 0)"
-                    size="large"
-                    circle
-                    >
-                    <!-- <el-icon :name="item.icon" /> -->
-                     <div style="display: flex; flex-direction: column;align-items: center;">
-                      <img width="18px" :src="item.icon" alt="自定义图标" style="display: block;" />
-                      <el-text class="mx-1" size="small">{{ item.name }}</el-text>
-                    </div>
-                    </el-button>
-                </el-col>
-            </el-row>
-        </div>
-    </div>
-  </template>
-  
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
+import { useUserState } from '@/composables/state';
 
+const userState = useUserState()
   const navItems = [
     { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/'},
     { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish'},
@@ -38,9 +14,39 @@ import { ref } from 'vue';
   
   function handleClick(i) {
     selectedId.value = i.id;
+    userState.value = {
+      SelectId: selectedId.value
+    }
     router.push(i.path)
   }
   </script>  
+
+
+<template>
+    <div class="container">
+        <div class="selectBox">
+            <el-row justify=center>
+                <el-col :span="6" v-for="item in navItems" :key="item.id">
+                    <el-button
+                    type="primary"
+                    :class="{ active: userState.SelectId === item.id }"
+                    @click="handleClick(item)"
+                    color="rgba(0, 0, 0, 0)"
+                    size="large"
+                    circle
+                    >
+                    <!-- <el-icon :name="item.icon" /> -->
+                     <div style="display: flex; flex-direction: column;align-items: center;">
+                      <img width="18px" :src="item.icon"  style="display: block;" />
+                      <el-text class="mx-1" size="small">{{ item.name }}</el-text>
+                    </div>
+                    </el-button>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
+  </template>
+  
 <style scoped>
 .el-button.active {
     background-color: #FEDE00; /* 这里设置点击后的背景颜色 */

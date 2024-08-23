@@ -56,7 +56,6 @@ const randomBackground = () => {
     const dish = document.createElement('div');
     dish.classList.add('dishBackground','animate__animated','animate__fadeIn');
     dish.addEventListener('animationend', function() {
-    // 动画结束后的操作
     dish.classList.add('animate__fadeOut')
   });
 
@@ -84,7 +83,7 @@ const randomBackground = () => {
 <template>
   <div class="backgroundBox">
     <div class="randomBox">
-        <el-text style="font-size: 40px; color: #ff9900; position: relative; z-index: 2;">{{ dishName }}</el-text>
+        <el-text style="font-size: 40px;font-weight: 600; color: #ff9900; position: relative; z-index: 2;">{{ dishName }}</el-text>
         <el-button @click="toggleRandom" round class="starButton">{{ isRandomizing? '停止选菜' : '开始选菜'}}</el-button>
     </div>
   </div>

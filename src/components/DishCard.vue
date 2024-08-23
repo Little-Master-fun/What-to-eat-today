@@ -1,41 +1,21 @@
 <script setup>
-import { ArrowLeft } from "@element-plus/icons-vue";
-import { useRouter } from "vue-router";
 
-const router = useRouter()
-const dish = 2;
+const props = defineProps({
+    dishName: String,
+    dishLocation: String,
+    dishPrice: String,
+    dishId: Number
+})
+console.log(props.dishName);
+
+
 </script>
 
 <template>
-  <div class="header">
-    <el-row>
-      <el-col :span="1" @click="router.push('/')">
-        <el-icon size="30" class="backButton" ><ArrowLeft /></el-icon>
-      </el-col>
-      <el-col :span="20" style="padding-left: 5vw">
-        <div class="searchBox">
-          <input
-            type="text"
-            style="
-              border-radius: 0px;
-              width: 90vw;
-              height: 4.5vh;
-              margin-left: 15px;
-              margin-right: 15px;
-            "
-          />
-          <div class="searchButton" @click="router.push('/search')">
-            <el-text size="small" style="color: black">搜索</el-text>
-          </div>
-        </div>
-      </el-col>
-    </el-row>
-  </div>
-  <el-card class="searchResult" :body-style="{ padding: '0px 0px 0px 0px' }">
-    <el-card
+        <el-card
       class="dishCard"
       :body-style="{ padding: '10px 10px 10px 10px' }"
-      v-for="i in dish"
+      
     >
       <el-row>
         <el-col :span="9" style="display: grid; place-items: center">
@@ -48,18 +28,18 @@ const dish = 2;
           <el-row justify="space-between">
             <el-col span="6"
               ><el-text style="font-size: 16px; color: black"
-                >菜品名称</el-text
+                >{{ props.dishName }}</el-text
               ></el-col
             >
             <el-col span="10">
               <el-text style="font-size: 15px; margin-right: 25px; color: black"
-                >价格</el-text
+                >{{ props.dishPrice }}元</el-text
               >
             </el-col>
           </el-row>
           <el-row style="margin-top: 3vh" justify="space-between">
             <el-col span="6"
-              ><el-text style="font-size: 16px">位置</el-text></el-col
+              ><el-text style="font-size: 16px">{{props.dishLocation}}</el-text></el-col
             >
             <el-col span="10">
               <el-button
@@ -75,53 +55,7 @@ const dish = 2;
         </el-col>
       </el-row>
     </el-card>
-    <div class="divider">
-      <span class="divider-text">符合条件较少，我们为您推荐以下菜品</span>
-    </div>
-    <el-card
-      class="dishCard"
-      :body-style="{ padding: '10px 10px 10px 10px' }"
-      v-for="i in dish"
-    >
-      <el-row>
-        <el-col :span="9" style="display: grid; place-items: center">
-          <el-image
-            style="border-radius: 10px; margin-right: 10px"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-          />
-        </el-col>
-        <el-col :span="15" justify="space-between">
-          <el-row justify="space-between">
-            <el-col span="6"
-              ><el-text style="font-size: 16px; color: black"
-                >菜品名称</el-text
-              ></el-col
-            >
-            <el-col span="10">
-              <el-text style="font-size: 15px; margin-right: 25px; color: black"
-                >价格</el-text
-              >
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 3vh" justify="space-between">
-            <el-col span="6"
-              ><el-text style="font-size: 16px">位置</el-text></el-col
-            >
-            <el-col span="10">
-              <el-button
-                class="changeButton"
-                round
-                @click="router.push('/detail')"
-                ><el-text style="color: black; font-size: 14px"
-                  >详细信息</el-text
-                ></el-button
-              >
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </el-card>
-  </el-card>
+
 </template>
 
 <style scoped>
@@ -258,4 +192,5 @@ const dish = 2;
   left: 50%;
   transform: translateX(-50%);
 }
+
 </style>

@@ -2,10 +2,17 @@
 import { ref } from 'vue';
 import StarRating from 'vue-star-rating'
 import { ArrowLeft } from '@element-plus/icons-vue';
+import CommitCard from '@/components/CommitCard.vue';
+
 
 
 const Imgsrc = ref('https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg')
 const rating = ref(2.5)
+
+const load = () => {
+  count.value += 2
+}
+
 </script>
 
 <template>
@@ -14,24 +21,64 @@ const rating = ref(2.5)
         <el-image :src="Imgsrc" style="height: 30.8vh; width: 100vw;"/>
     </div>
     <div>
-        <el-card class="dishDetial">
-            <div>
-                <star-rating :rating="rating" 
-                :rounded-corners=ture
-                :increment="0.5"
-                :star-size="30"
-                active-color="#FEDE00"
-                :read-only=true
-                :show-rating=false
-                :rtl=true
-                ></star-rating>
-                <el-text class="point">{{ rating }}</el-text>
-            </div>
+        <el-card 
+        class="dishDetial"
+        :body-style="{padding:'0px 0px 0px 0px'}"
+        >
+            <el-card 
+            class="starBox"
+            >
+                <div>
+                    <star-rating :rating="rating" 
+                    :rounded-corners=ture
+                    :increment="0.5"
+                    :star-size="30"
+                    active-color="#FEDE00"
+                    :read-only=true
+                    :show-rating=false
+                    :rtl=true
+                    ></star-rating>
+                    <el-text class="point">{{ rating }}</el-text>
+                </div>
+            </el-card>
+            <el-card class="commitBox">
+                <template #header>
+                    <el-text style="color: black; font-size: medium;">评论</el-text>
+                </template>
+                <div>
+                    <ul 
+                v-infinite-scroll="load" 
+                class="infinite-list" 
+                style="overflow: auto"
+                :infinite-scroll-disabled="disabled"
+                >
+                <li v-for="i in 10" :key="i" class="infinite-list-item">
+                    <CommitCard></CommitCard>
+                </li>
+                </ul>
+
+                </div>
+
+            </el-card>
         </el-card>
     </div>
 </template>
 
 <style scoped>
+.infinite-list {
+  height: 35.5vh;
+  overflow: hidden;
+}
+
+.commitBox{
+    margin-top: 1vh;
+    min-height: 43vh;
+}
+.starBox{
+    width: 100vw;
+    height: 20vh;
+    border-radius: 10px 10px 0px 0px;
+}
 .dishDetial{
     position: absolute;
     top: 29vh;
