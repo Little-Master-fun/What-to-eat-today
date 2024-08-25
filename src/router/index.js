@@ -23,11 +23,11 @@ const router = createRouter({
       component:Dish
     },
     {
-      path:'/randomDish',
+      path:'/randomDish/:canteenid',
       component:RandomDish
     },
     {
-      path:'/detail',
+      path:'/detail/:dishid?',
       component:DetailDish
     },
     {

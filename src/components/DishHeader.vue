@@ -1,26 +1,56 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+import http from "@/utils/http";
 
+const canteenId = ref(1)
 const src =
   "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg";
 const dialogFormVisible = ref(false);
+const allCanteen = ref('')
+const canteenName = ref('')
+
+
+async function getDish() {
+  const res = http.get('/dish/'+canteenId.value+'/all')
+  console.log((await res).data);
+}
+async function getCanteen() {
+  const res = http.get('/canteen/' + canteenId.value)
+  canteenName.value = (await res).data.name
+  
+}
+async function changeCanteenButton(){
+  allCanteen.value = (await http.get('/canteen/all')).data
+  dialogFormVisible.value = true 
+}
+async function changeCanteen(id) {
+  canteenId.value = id;
+  dialogFormVisible.value = false
+  getDish()
+  getCanteen()
+}
+
+onMounted(() => {
+  getDish()
+  getCanteen()
+})
 </script>
 
 <template>
   <div class="contain">
     <el-row justify="center" style="">
-      <el-col span="24">
+      <el-col :span="24">
         <div>
           <el-image :src="src" class="img" />
         </div>
       </el-col>
     </el-row>
     <el-row style="height: 8vh" justify="space-between">
-      <el-col span="10">
-        <el-text size="large" class="text"><strong>新远食堂</strong></el-text>
+      <el-col :span="10">
+        <el-text size="large" class="text">{{ canteenName }}食堂</el-text>
       </el-col>
-      <el-col span="10">
-        <el-button class="changeButton" round @click="dialogFormVisible = true"
+      <el-col :span="10">
+        <el-button class="changeButton" round @click="changeCanteenButton()"
           ><el-text size="small" style="color: black"
             ><strong>更换食堂</strong></el-text
           ></el-button
@@ -30,29 +60,9 @@ const dialogFormVisible = ref(false);
   </div>
   <el-dialog v-model="dialogFormVisible" title="更换食堂" width="80vw">
     <div class="iconBox">
-      <div class="icon-test">
+      <div class="icon-test" v-for="canteen in allCanteen" @click="changeCanteen(canteen.id)">
         <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>食堂1</p>
-      </div>
-      <div class="icon-test">
-        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>食堂</p>
-      </div>
-      <div class="icon-test">
-        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>食堂</p>
-      </div>
-      <div class="icon-test">
-        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>收藏</p>
-      </div>
-      <div class="icon-test">
-        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>收藏</p>
-      </div>
-      <div class="icon-test">
-        <img src="../components/icon/🦆 icon _star_.png" alt="star" />
-        <p>收藏</p>
+        <p>{{ canteen.name }}</p>
       </div>
     </div>
   </el-dialog>
@@ -76,6 +86,8 @@ const dialogFormVisible = ref(false);
 .text {
   color: black;
   margin-left: 20px;
+  font-weight: 600;
+  font-size: 20px;
 }
 .el-col {
   justify-content: center;

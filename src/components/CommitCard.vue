@@ -1,25 +1,26 @@
 <script setup>
+import { ref } from 'vue';
 import StarRating from 'vue-star-rating'
 
-
+const url = ref('https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg')
 
 </script>
 
 <template>
     <div class="commitCard">
-        <el-avatar :size="40" :src="circleUrl" />
+        <el-avatar :size="40" :src="url" />
         <div class="commit">
             <div>
                 <el-text style="text-align: left;">用户名称</el-text>
             </div>
             <div>
                 <star-rating :rating="2.5" 
-                    :rounded-corners=ture
+                    :rounded-corners="true"
                     :increment="0.5"
                     :star-size="10"
                     active-color="#FEDE00"
-                    :read-only=true
-                    :show-rating=false
+                    :read-only="true"
+                    :show-rating="false"
                     ></star-rating>
             </div>
             <div style="width: 75vw;">

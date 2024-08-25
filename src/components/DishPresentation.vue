@@ -11,9 +11,13 @@ const Window = [
     { id: 7, name: '七号窗口', path: '/user'},
     { id: 8, name: '八号窗口', path: '/user'},
   ];
-  const router = useRouter()
-
+const router = useRouter()
 const dish = 50
+
+
+function handleSelect(params) {
+    
+}
 </script>
 
 <template>
@@ -21,11 +25,11 @@ const dish = 50
         <el-container style="height: 100%;">
         <el-aside width="22vw">
             <el-menu
-                :default-active="1"
+                default-active="1"
                 class="el-menu-demo"
                 @select="handleSelect"
             >
-                <el-menu-item :index="item.id" v-for="item in Window" :key="item.id">
+                <el-menu-item index="item.id" v-for="item in Window" :key="item.id">
                     <el-text size="small">{{item.name}}</el-text>
                 </el-menu-item>
             </el-menu>
@@ -34,6 +38,7 @@ const dish = 50
             <el-card class="dishCard"
             :body-style="{padding:'10px 0px 10px 10px'}"
             v-for="i in dish"
+            :index="i.toString()"
             >
                 <el-row>
                 <el-col :span="9" style="display: grid; place-items: center;">
@@ -44,9 +49,9 @@ const dish = 50
                         <el-text style="color: black;" size="large"><strong>菜品名称</strong></el-text>
                      </el-row>
                      <el-row style="margin-top: 3vh;" justify="space-between">
-                        <el-col span="6"><el-text size="small">价格</el-text></el-col>
-                        <el-col span="10">
-                            <el-button class="changeButton" round @click="router.push('detail')"><el-text size="small" style="color: black;">详细信息</el-text></el-button>
+                        <el-col :span="6"><el-text size="small">价格</el-text></el-col>
+                        <el-col :span="12">
+                            <el-button class="detailButton" round @click="router.push('detail')"><el-text size="small" style="color: black;">详细信息</el-text></el-button>
                         </el-col>
                      </el-row>
                 </el-col>
@@ -80,7 +85,7 @@ const dish = 50
     margin: 0px;
     padding: 0px;
 }
-.changeButton{
+.detailButton{
     color: rgb(0, 0, 0);
     background-color: #FFE062;
     margin-right: 20px;

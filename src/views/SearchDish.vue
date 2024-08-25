@@ -133,8 +133,6 @@ const dish = 2;
   background-color: #835858 !important; /* 设置中间文本的背景颜色，您可以根据需求修改 */
   padding: 0 10px; /* 增加文本的内边距，可根据需要调整 */
 }
-.dividers {
-}
 .header {
   margin: 0%;
   background-color: rgba(0, 0, 0, 0);
