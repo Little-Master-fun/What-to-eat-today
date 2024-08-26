@@ -38,13 +38,10 @@ async function handleRegister() {
         })
 
     } else {
-        http.post("/users/admin/register", null, {
-            params: {
-                access_name: form.value.username,
-                password: form.value.password
-            }
-        }
-        ).then(response => {
+        http.post("/users/admin/register", {
+            "access_name": form.value.username,
+            "password": form.value.password,
+        }).then(response => {
             ElMessage({
                 message: '注册成功',
                 type: 'success',
@@ -77,8 +74,14 @@ async function handleLogin() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
+        const res = http.get('/users/me',null,{
+            headers: {
+                // Authorization:
+            }
+        })
         stateUser.value = {
             accesstoken: response.data.access_token,
+            refresh: response.data,
             username: form.value.username
         }
         console.log(stateUser);
