@@ -32,7 +32,7 @@ const dish = 2;
     </el-row>
   </div>
   <el-card class="searchResult" :body-style="{ padding: '0px 0px 0px 0px' }">
-    <el-card
+    <!-- <el-card
       class="dishCard"
       :body-style="{ padding: '10px 10px 10px 10px' }"
       v-for="i in dish"
@@ -46,19 +46,19 @@ const dish = 2;
         </el-col>
         <el-col :span="15" justify="space-between">
           <el-row justify="space-between">
-            <el-col span="6"
+            <el-col :span="6"
               ><el-text style="font-size: 16px; color: black"
                 >菜品名称</el-text
               ></el-col
             >
-            <el-col span="10">
+            <el-col :span="10">
               <el-text style="font-size: 15px; margin-right: 25px; color: black"
                 >价格</el-text
               >
             </el-col>
           </el-row>
           <el-row style="margin-top: 3vh" justify="space-between">
-            <el-col span="6"
+            <el-col :span="6"
               ><el-text style="font-size: 16px">位置</el-text></el-col
             >
             <el-col span="10">
@@ -120,7 +120,7 @@ const dish = 2;
           </el-row>
         </el-col>
       </el-row>
-    </el-card>
+    </el-card> -->
   </el-card>
 </template>
 

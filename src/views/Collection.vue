@@ -23,7 +23,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-card class="collectionBox">
+  <el-card 
+  class="collectionBox"
+  :body-style="{ padding: '0px 0px 0px 0px' }"
+  >
     <template #header>
       <el-row class="row-bg" justify="space-between">
         <el-col :span="6">
@@ -46,7 +49,9 @@ onMounted(() => {
         </p>
       </div>
     </el-scrollbar>
-    <el-card class="collectionDish">
+    <el-card 
+    class="collectionDish"
+    >
 
     </el-card>
   </el-card>
@@ -54,7 +59,7 @@ onMounted(() => {
 
 <style scoped>
 .collectionDish{
-    height: 74vh;
+    height: 79.8vh;
 }
 .collectionBox {
   height: 92.9vh;
@@ -73,21 +78,24 @@ onMounted(() => {
 }
 .scrollbar-flex-content {
   display: flex;
+  height: 5vh;
 }
 .scrollbar-demo-item {
+  flex: 1;
+  max-width: 130px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100px;
   height: 50px;
-  margin: 10px;
   text-align: center;
   border-radius: 4px;
-  background: var(--el-color-danger-light-9);
-  color: var(--el-color-danger);
+  color: #848484;
 }
 .scrollbar-flex-content p.active{
-    color: aqua;
+    color: black;
+    background-color: white;
+    border-radius: 100% 100% 0px 0px;
 }
 </style>

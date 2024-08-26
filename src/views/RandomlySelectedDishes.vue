@@ -20,18 +20,26 @@ const dishes = ref([]);
 async function getallDish() {
   const res = http.get("/dish/" + canteenId + "/all");
   for (let i of (await res).data) {
-    dishes.value.push({name:i.name,id:i.id});
+    dishes.value.push({ name: i.name, id: i.id });
   }
 }
 const randomDish = () => {
   const randomIndex = Math.floor(Math.random() * dishes.value.length);
-  dishName.value = dishes.value[randomIndex].name;
-  dishId.value = dishes.value[randomIndex].id
+  const randomdish = dishes.value[randomIndex]
+  dishName.value = randomdish.name;
+  dishId.value = randomdish.id
+  console.log(dishId.value);
+  
 };
 
+const getRandomDish = () => {
+  const randomIndex = Math.floor(Math.random() * dishes.value.length);
+  const dish = dishName.value = dishes.value[randomIndex].name
+  return (dish)
+}
 
 const randomFontSize = () => {
-  return Math.random() * 30 + 10; 
+  return Math.random() * 30 + 10;
 };
 
 const toggleRandom = () => {
@@ -72,7 +80,7 @@ const randomBackground = () => {
 
   const fontSize = randomFontSize();
 
-  dish.innerHTML = dishName.value;
+  dish.innerHTML = getRandomDish();
 
   dish.style.left = x + "px";
   dish.style.top = y + "px";
@@ -95,18 +103,14 @@ onMounted(() => {
 <template>
   <div class="backgroundBox">
     <div class="randomBox">
-      <el-text
-        style="
+      <el-text style="
           font-size: 40px;
           font-weight: 600;
           color: #ff9900;
           position: relative;
           z-index: 2;
-        "
-        @click="router.push('/detail/' + dishId.value)"
-        >{{ dishName }}</el-text
-      >
-      <el-button @click="toggleRandom" round class="starButton">{{
+        " @click="router.push('/detail/' + dishId)">{{ dishName }}</el-text>
+      <el-button @click="toggleRandom(), getRandomDish()" round class="starButton">{{
         isRandomizing ? "停止选菜" : "开始选菜"
       }}</el-button>
     </div>
@@ -127,25 +131,32 @@ onMounted(() => {
   transform: translate(-50%, -50%);
   z-index: 2;
 }
+
 .el-button {
   display: block;
   z-index: 2;
 }
+
 .dishBackground {
   position: absolute !important;
 }
+
 .backgroundBox {
   width: 100vw;
   height: 90vh;
 }
+
 .starButton {
   background-color: #ffdb4a;
   position: relative;
   z-index: 2;
 }
+
 .starButton:hover,
 .starButton:focus {
-  background-color: #ffdb4a; /* 恢复初始背景色，取消点击时的颜色变化 */
-  color: initial; /* 恢复初始文字颜色，取消点击时的颜色变化 */
+  background-color: #ffdb4a;
+  /* 恢复初始背景色，取消点击时的颜色变化 */
+  color: initial;
+  /* 恢复初始文字颜色，取消点击时的颜色变化 */
 }
 </style>

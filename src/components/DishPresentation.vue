@@ -2,14 +2,14 @@
 import { useRouter } from 'vue-router';
 
 const Window = [
-    { id: 1, name: '一号窗口', path: '/'},
-    { id: 2, name: '二号窗口', path: '/dish'},
-    { id: 3, name: '三号窗口', path: '/user'},
-    { id: 4, name: '四号窗口', path: '/user'},
-    { id: 5, name: '五号窗口', path: '/user'},
-    { id: 6, name: '六号窗口', path: '/user'},
-    { id: 7, name: '七号窗口', path: '/user'},
-    { id: 8, name: '八号窗口', path: '/user'},
+    { id: '1', name: '一号窗口', path: '/'},
+    { id: '2', name: '二号窗口', path: '/dish'},
+    { id: '3', name: '三号窗口', path: '/user'},
+    { id: '4', name: '四号窗口', path: '/user'},
+    { id: '5', name: '五号窗口', path: '/user'},
+    { id: '6', name: '六号窗口', path: '/user'},
+    { id: '7', name: '七号窗口', path: '/user'},
+    { id: '8', name: '八号窗口', path: '/user'},
   ];
 const router = useRouter()
 const dish = 50
@@ -29,7 +29,7 @@ function handleSelect(params) {
                 class="el-menu-demo"
                 @select="handleSelect"
             >
-                <el-menu-item index="item.id" v-for="item in Window" :key="item.id">
+                <el-menu-item :index="item.id" v-for="item in Window" :key="item.id">
                     <el-text size="small">{{item.name}}</el-text>
                 </el-menu-item>
             </el-menu>

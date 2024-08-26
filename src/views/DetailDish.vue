@@ -1,24 +1,49 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import http from "@/utils/http";
 import StarRating from "vue-star-rating";
 import { ArrowLeft } from "@element-plus/icons-vue";
 import CommitCard from "@/components/CommitCard.vue";
 import router from "@/router";
 
-
+const allCanteen = ref({})
 const route = useRoute()
 const dishId = route.params.dishid
-console.log(dishId);
-
+const dishName = ref('')
+const dishPrice = ref('')
+const dishlocation = ref('')
+const rating = ref(2.5);
 const Imgsrc = ref(
   "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
 );
-const rating = ref(2.5);
+const Fooler = ['一层','二层','三层','四层']
+
+
+async function dishLocation(i) {
+  const res = http.get('/canteen/all')
+  allCanteen.value = (await res).data
+  dishPrice.value = i.price
+  const dishFloor = Fooler[i.floor]  
+  dishlocation.value = allCanteen.value[i.canteen].name + dishFloor +i.window + '号窗口'
+}
+
+
+async function getDetailDish() {
+  const res = http.get('/dish/' + dishId)
+  rating.value = (await res).data.average_vote
+  dishName.value = (await res).data.name
+  dishLocation((await res).data)
+}
+
 
 const load = () => {
   count.value += 2;
 };
+
+onMounted(() => {
+  getDetailDish()
+})
 </script>
 
 <template>
@@ -31,7 +56,19 @@ const load = () => {
   <div>
     <el-card class="dishDetial" :body-style="{ padding: '0px 0px 0px 0px' }">
       <el-card class="starBox">
-        <div>
+        <div style="display: flex;">
+          <div style="flex: 1;display: flex;flex-direction: column;text-align: left;">
+            <div style="margin-bottom: 5px;">
+              <el-text style="font-size: 30px;font-weight: 600;color: black;">{{ dishName }}</el-text>
+            </div>
+            <div style="margin-bottom: 5px;">
+              <el-text style="font-size: 17px;font-weight: 600;">{{ dishPrice }}元</el-text>
+            </div>
+            <div>
+              <el-text style="">{{ dishlocation }}</el-text>
+            </div>
+        </div>
+        <div style="flex: 1;">
           <star-rating
             :rating="rating"
             :increment="0.5"
@@ -42,6 +79,8 @@ const load = () => {
             :rtl="true"
           ></star-rating>
           <el-text class="point">{{ rating }}</el-text>
+        </div>
+
         </div>
       </el-card>
       <el-card class="commitBox">

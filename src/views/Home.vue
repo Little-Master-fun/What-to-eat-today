@@ -7,8 +7,8 @@ import http from "@/utils/http";
 
 const dialogFormVisible = ref(false);
 const canteenId = ref(1)
-const newDish = ref('')
-const allCanteen = ref('')
+const newDish = ref([])
+const allCanteen = ref([])
 
 
 

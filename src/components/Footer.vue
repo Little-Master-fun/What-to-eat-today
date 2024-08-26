@@ -3,21 +3,18 @@ import router from '@/router';
 import { ref } from 'vue';
 import { useUserState } from '@/composables/state';
 
-const userState = useUserState()
+const footerIndex = useUserState('footerIndex',1)
   const navItems = [
     { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/'},
     { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish'},
     { id: 3, name: '我的', icon: '/src/components/icon/Group.png', path: '/user'},
   ];
   
-  const selectedId = ref(1);
   
   function handleClick(i) {
-    selectedId.value = i.id;
-    userState.value = {
-      SelectId: selectedId.value
-    }
+    footerIndex.value = i.id
     router.push(i.path)
+    
   }
   </script>  
 
@@ -29,13 +26,12 @@ const userState = useUserState()
                 <el-col :span="6" v-for="item in navItems" :key="item.id">
                     <el-button
                     type="primary"
-                    :class="{ active: userState.SelectId === item.id }"
+                    :class="{ active: footerIndex == item.id }"
                     @click="handleClick(item)"
                     color="rgba(0, 0, 0, 0)"
                     size="large"
                     circle
                     >
-                    <!-- <el-icon :name="item.icon" /> -->
                      <div style="display: flex; flex-direction: column;align-items: center;">
                       <img width="18px" :src="item.icon"  style="display: block;" />
                       <el-text class="mx-1" size="small">{{ item.name }}</el-text>

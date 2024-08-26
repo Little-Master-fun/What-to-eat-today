@@ -1,32 +1,90 @@
 <script setup>
 import { useRouter } from 'vue-router';
+import { useLocalStorage } from '@vueuse/core';
+import { Delete } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref } from 'vue';
 
+const text = {
+    "username" : "lasd"
+}
+const { value, setValue } = useLocalStorage('state=user', '')
 const router = useRouter()
+const user = ref(JSON.parse(localStorage.getItem('state-user')))
 
+
+const Exit = () => {
+  ElMessageBox.confirm(
+    '你确认要退出登入吗',
+    '警告',
+    {
+      confirmButtonText: '确认',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: '成功退出',
+      })
+      localStorage.setItem('state-user', {})
+      user.value = {
+        accesstoken : '',
+            username : ''
+      }
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '已取消',
+      })
+    })
+}
 </script>
 
 <template>
     <div class="userBox">
-        <el-row justify="center" :gutter="12">
-            <el-col :span="9">
-                <div class="block">
-                    <el-avatar :size="100" :src="circleUrl" />
-                </div>
-            </el-col>
-            <el-col :span="15">
-                <div class="userName">
-                        <el-text style="font-size: 24px;margin-top: 10px;"><strong>你的名字</strong></el-text>
+        <div v-if="!user.username">
+            <el-row justify="center" :gutter="12">
+                <el-col :span="9">
+                    <div class="block">
+                        <el-avatar :size="100" :src="circleUrl" @click="router.push('/login')"/>
+                    </div>
+                </el-col>
+                <el-col :span="15">
+                    <div class="userName">
+                        <el-text style="font-size: 24px;margin-top: 10px;" @click="router.push('/login')"><strong>登入/注册</strong></el-text>
                         <el-text style="font-size: 16px;">一花一世界，一叶一菩提</el-text>
-                </div>
-            </el-col>
-        </el-row>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
+        <div v-else>
+            <el-row justify="center" :gutter="12">
+                <el-col :span="9">
+                    <div class="block">
+                        <el-avatar :size="100" :src="circleUrl" />
+                    </div>
+                </el-col>
+                <el-col :span="15">
+                    <div class="userName">
+                        <div style="text-align: center;">
+                            <el-text style="font-size: 24px;margin-top: 10px;"><strong>{{user.username}}</strong></el-text>
+                            <el-icon style="margin-left: 20px;color: brown;" @click="Exit()"><Delete /></el-icon>
+                        </div>
+                        <el-text style="font-size: 16px;">一花一世界，一叶一菩提</el-text>
+                    </div>
+                </el-col>
+            </el-row>
+        </div>
         <el-card class="iconBox">
-            <div style="display: flex;" @click="router.push('/collection')">
-                <div class="icon-test">
+            <div style="display: flex;" >
+                <div class="icon-test" @click="router.push('/collection')">
                     <img src="../components/icon/🦆 icon _star_.png" alt="star">
                     <p>收藏</p>
                 </div>
-                <div class="icon-test">
+                <div class="icon-test" @click="router.push('/feedback')">
                     <img src="../components/icon/🦆 icon _edit one_.png" alt="edit">
                     <p>反馈</p>
                 </div>
@@ -38,31 +96,36 @@ const router = useRouter()
 
 
 <style scoped>
-.block{
+.block {
     align-items: center;
     text-align: right;
 }
-.userBox{
+
+.userBox {
     position: absolute;
     top: 10vh;
     width: 100vw;
 
 }
-.el-row{
+
+.el-row {
     width: 100vw;
     margin-bottom: 10px;
-    
+
 }
-.userName{
+
+.userName {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
-.iconBox{
+
+.iconBox {
     width: 92.3vw;
     margin: 4.7vh auto;
     border-radius: 20px;
 }
+
 .icon-test {
     display: flex;
     align-items: center;
@@ -71,4 +134,3 @@ const router = useRouter()
     flex: 1;
 }
 </style>
-
