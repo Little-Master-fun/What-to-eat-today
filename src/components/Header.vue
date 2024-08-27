@@ -1,8 +1,18 @@
 <script setup>
-import { RouterLink ,useRouter} from 'vue-router';
+import { RouterLink ,useRouter, useRoute} from 'vue-router';
 import { Location } from '@element-plus/icons-vue';
+import { ref } from 'vue';
+
 
 const router = useRouter()
+const route = useRoute()
+const searchData = ref('')
+const props = defineProps({
+  canteenId : Number
+})
+
+console.log(props.canteenId);
+
 
 </script>
 <template>
@@ -16,8 +26,8 @@ const router = useRouter()
         <el-row>
             <el-col :span="24" style="padding-left: 5vw;">
                 <div style="display: flex;" class="searchBox">
-                    <input type="text" style="border-radius: 0px; width: 92.3vw;height: 4.5vh; margin-left: 15px; margin-right: 15px;"/>
-                    <div class="searchButton" @click="router.push('search')">
+                    <input v-model="searchData" type="text" style="border-radius: 0px; width: 92.3vw;height: 4.5vh; margin-left: 15px; margin-right: 15px;"/>
+                    <div class="searchButton" @click="router.push('/search/' + props.canteenId + '/' + searchData)" >
                         <el-text  size="small" style="color: black;">搜索</el-text>
                     </div>
                 </div>

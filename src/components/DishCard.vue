@@ -1,18 +1,21 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import http from '@/utils/http';
 
 const dishlocation = ref('')
 const router = useRouter()
 const props = defineProps({
   dish : Object,
-  canteen : Array
 })
 const Fooler = ['一层','二层','三层','四层']
 
 async function dishLocation() {
+  const res = http.get('/canteen/all')
+  console.log((await res).data);
+  const canteen = (await res).data
   const dishFloor = Fooler[props.dish.floor]
-  const dishCanteen = props.canteen[props.dish.canteen].name  
+  const dishCanteen = canteen[props.dish.canteen - 1].name  
   dishlocation.value = dishCanteen + dishFloor
 }
 

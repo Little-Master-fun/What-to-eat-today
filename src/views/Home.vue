@@ -41,7 +41,7 @@ onMounted(() => {
   <div>
     <el-container>
       <el-header>
-        <Header></Header>
+        <Header :canteenId = 'canteenId'></Header>
       </el-header>
       <el-main>
         <el-button

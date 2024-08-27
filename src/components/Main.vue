@@ -64,7 +64,7 @@ onMounted(() => {
         style="overflow: auto"
         >
           <li v-for="i in props.newDish" :key="i.id" class="infinite-list-item">
-            <DishCard :dish = i :canteen = props.allCanteen></DishCard>
+            <DishCard :dish = i ></DishCard>
           </li>
         </ul>
       </el-card>

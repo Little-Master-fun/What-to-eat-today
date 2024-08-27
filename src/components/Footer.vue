@@ -3,13 +3,12 @@ import router from '@/router';
 import { ref } from 'vue';
 import { useUserState } from '@/composables/state';
 
-const footerIndex = useUserState('footerIndex', 1)
 const navItems = [
   { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/' },
   { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish' },
   { id: 3, name: '我的', icon: '/src/components/icon/Group.png', path: '/user' },
 ];
-footerIndex.value = 1
+const footerIndex = useUserState('footerIndex', 1)
 
 function handleClick(i) {
   footerIndex.value = i.id

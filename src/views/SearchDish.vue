@@ -1,9 +1,50 @@
 <script setup>
 import { ArrowLeft } from "@element-plus/icons-vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import http from "@/utils/http";
+import { onMounted, ref } from "vue";
+import DishCard from "@/components/DishCard.vue";
+
 
 const router = useRouter()
-const dish = 2;
+const route = useRoute()
+const searchResult = ref([])
+const randomResult = ref([])
+
+async function getSearchResult(s) {
+  http.get('/dish/search/',null,{
+    params: {
+      s: '25'
+    }
+  }).then(res => {
+    searchResult.value = res.data
+    if (Object.keys(res.data).length < 5) {
+      for (let i = 0; i <= 5-Object.keys(res.data).length; i++) {
+        http.get('/dish/' + route.params.canteenId + '/random').then(res => {
+          randomResult.value.push(res.data)
+        })
+      }
+      console.log(randomResult.value);
+      
+    }
+  }).catch(error => {
+    console.log(error);
+    
+    if (Object.keys(searchResult.value).length < 5) {
+      for (let i = 0; i < 5-Object.keys(searchResult.value).length; i++) {
+        http.get('/dish/' + route.params.canteenId + '/random').then(res => {
+          randomResult.value.push(res.data)
+        })
+      }
+      console.log(randomResult.value);
+
+  }})
+}
+
+
+onMounted(() => {
+  getSearchResult(route.params.searchData)
+})
 </script>
 
 <template>
@@ -32,95 +73,11 @@ const dish = 2;
     </el-row>
   </div>
   <el-card class="searchResult" :body-style="{ padding: '0px 0px 0px 0px' }">
-    <!-- <el-card
-      class="dishCard"
-      :body-style="{ padding: '10px 10px 10px 10px' }"
-      v-for="i in dish"
-    >
-      <el-row>
-        <el-col :span="9" style="display: grid; place-items: center">
-          <el-image
-            style="border-radius: 10px; margin-right: 10px"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-          />
-        </el-col>
-        <el-col :span="15" justify="space-between">
-          <el-row justify="space-between">
-            <el-col :span="6"
-              ><el-text style="font-size: 16px; color: black"
-                >菜品名称</el-text
-              ></el-col
-            >
-            <el-col :span="10">
-              <el-text style="font-size: 15px; margin-right: 25px; color: black"
-                >价格</el-text
-              >
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 3vh" justify="space-between">
-            <el-col :span="6"
-              ><el-text style="font-size: 16px">位置</el-text></el-col
-            >
-            <el-col span="10">
-              <el-button
-                class="changeButton"
-                round
-                @click="router.push('/detail')"
-                ><el-text style="color: black; font-size: 14px"
-                  >详细信息</el-text
-                ></el-button
-              >
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </el-card>
+    <DishCard v-for="i in searchResult" :dish="i"></DishCard>
     <div class="divider">
       <span class="divider-text">符合条件较少，我们为您推荐以下菜品</span>
     </div>
-    <el-card
-      class="dishCard"
-      :body-style="{ padding: '10px 10px 10px 10px' }"
-      v-for="i in dish"
-    >
-      <el-row>
-        <el-col :span="9" style="display: grid; place-items: center">
-          <el-image
-            style="border-radius: 10px; margin-right: 10px"
-            src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
-          />
-        </el-col>
-        <el-col :span="15" justify="space-between">
-          <el-row justify="space-between">
-            <el-col span="6"
-              ><el-text style="font-size: 16px; color: black"
-                >菜品名称</el-text
-              ></el-col
-            >
-            <el-col span="10">
-              <el-text style="font-size: 15px; margin-right: 25px; color: black"
-                >价格</el-text
-              >
-            </el-col>
-          </el-row>
-          <el-row style="margin-top: 3vh" justify="space-between">
-            <el-col span="6"
-              ><el-text style="font-size: 16px">位置</el-text></el-col
-            >
-            <el-col span="10">
-              <el-button
-                class="changeButton"
-                round
-                @click="router.push('/detail')"
-                ><el-text style="color: black; font-size: 14px"
-                  >详细信息</el-text
-                ></el-button
-              >
-            </el-col>
-          </el-row>
-        </el-col>
-      </el-row>
-    </el-card> -->
+    <DishCard v-for="i in randomResult" :dish="i"></DishCard>
   </el-card>
 </template>
 
@@ -174,6 +131,7 @@ const dish = 2;
   height: 85.9vh;
   box-shadow: none;
   background-color: #f5f5f5;
+  overflow: auto;
 }
 .container {
   background-color: #f5f5f5;

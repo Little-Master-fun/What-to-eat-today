@@ -34,7 +34,7 @@ const router = createRouter({
       component:DetailDish
     },
     {
-      path:'/search',
+      path:'/search/:canteenId/:searchData?',
       component:SearchDish
     },
     {

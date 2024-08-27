@@ -8,11 +8,6 @@ import { useLocalStorage } from "@vueuse/core";
 
 const router = useRouter()
 const register = ref(false)
-const stateUser = useLocalStorage('state-user', {
-    accesstoken: '',
-    username: ''
-
-})
 const form = ref({
     username: "LittleMaster",
     password: "123456",
@@ -74,16 +69,26 @@ async function handleLogin() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        const res = http.get('/users/me',null,{
-            headers: {
-                // Authorization:
-            }
+        const stateUser = useLocalStorage('state-user', {
+            accesstoken: '',
+            username: ''
         })
+
         stateUser.value = {
             accesstoken: response.data.access_token,
             refresh: response.data,
-            username: form.value.username
+            username: form.value.username,
         }
+        http.get('/users/me', null, {
+            headers: {
+               'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzX2FkbWluIjp0cnVlLCJleHAiOjE3MjQ3MjAwNDZ9.NI_VbQkScQWMiJJIKCiUaRVMCJ6TT4hJGtW6moKHgLM'
+            }
+        }).then(res => {
+            console.log(res);
+
+        }
+
+        )
         console.log(stateUser);
         ElMessage({
             message: '登入成功',

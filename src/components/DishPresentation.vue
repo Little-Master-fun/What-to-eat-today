@@ -1,23 +1,41 @@
 <script setup>
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { numberToChineseCharacter } from 'pixiu-number-toolkit';
 
-const Window = [
-    { id: '1', name: '一号窗口', path: '/'},
-    { id: '2', name: '二号窗口', path: '/dish'},
-    { id: '3', name: '三号窗口', path: '/user'},
-    { id: '4', name: '四号窗口', path: '/user'},
-    { id: '5', name: '五号窗口', path: '/user'},
-    { id: '6', name: '六号窗口', path: '/user'},
-    { id: '7', name: '七号窗口', path: '/user'},
-    { id: '8', name: '八号窗口', path: '/user'},
-  ];
+const emit = defineEmits(['changeWindow'])
+const props = defineProps({
+    window: Object,
+    canteen: Number,
+    floor: Number,
+    dishes: Object
+})
+console.log(props.window);
+console.log(props.dishes);
+
+
 const router = useRouter()
+const windows = ref([])
 const dish = 50
 
 
-function handleSelect(params) {
-    
+
+// function getWindow() {
+//   for (let i = 0; i < props.window; i++) {
+//     windows.value.push({window: numberToChineseCharacter(i+1) + '号窗口',
+//       id: String(i + 1)
+//     })
+//   }
+//   console.log(windows.value);
+  
+// }
+function handleSelect(i) {
+    emit('changeWindow', i)
 }
+
+onMounted(() => {
+    emit('changeWindow')
+})
 </script>
 
 <template>
@@ -27,18 +45,16 @@ function handleSelect(params) {
             <el-menu
                 default-active="1"
                 class="el-menu-demo"
-                @select="handleSelect"
             >
-                <el-menu-item :index="item.id" v-for="item in Window" :key="item.id">
-                    <el-text size="small">{{item.name}}</el-text>
+                <el-menu-item :index="item.id" v-for="item in props.window" :key="item.id" @click="handleSelect(item.id)">
+                    <el-text size="small">{{item.window}}</el-text>
                 </el-menu-item>
             </el-menu>
         </el-aside>
         <el-main>
             <el-card class="dishCard"
             :body-style="{padding:'10px 0px 10px 10px'}"
-            v-for="i in dish"
-            :index="i.toString()"
+            v-for="i in props.dishes"
             >
                 <el-row>
                 <el-col :span="9" style="display: grid; place-items: center;">
@@ -46,10 +62,10 @@ function handleSelect(params) {
                 </el-col>
                 <el-col :span="15" justify="space-between">
                      <el-row >
-                        <el-text style="color: black;" size="large"><strong>菜品名称</strong></el-text>
+                        <el-text style="color: black;" size="large"><strong>{{ i.name }}</strong></el-text>
                      </el-row>
                      <el-row style="margin-top: 3vh;" justify="space-between">
-                        <el-col :span="6"><el-text size="small">价格</el-text></el-col>
+                        <el-col :span="6"><el-text size="small">{{ i.price }} 元</el-text></el-col>
                         <el-col :span="12">
                             <el-button class="detailButton" round @click="router.push('detail')"><el-text size="small" style="color: black;">详细信息</el-text></el-button>
                         </el-col>

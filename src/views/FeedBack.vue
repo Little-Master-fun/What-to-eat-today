@@ -62,7 +62,7 @@ onMounted(() => {
         <el-card class="refreshBox" :body-style="{ padding: '10vh 5vw 0px 5vw' }">
             <el-form v-model="refreshData" label-width="auto" size="large">
                 <el-form-item label="问题描述">
-                    <el-input v-model="refreshData" type="textarea" :row="2" :autosize="{ minRows: 10, maxRows: 4 }" placeholder="Please input"/>
+                    <el-input v-model="refreshData" type="textarea" :row="2" :autosize="{ minRows: 10, maxRows: 4 }" placeholder="小白项目，bug多多，如有不便，还望见谅，"/>
                 </el-form-item>
                 <el-form-item style="">
                     <el-button type="primary" @click="onSubmit">提交</el-button>
@@ -75,6 +75,7 @@ onMounted(() => {
 <style scoped>
 .refreshBox {
     height: 79.8vh;
+    border: none;
 }
 
 .collectionBox {
@@ -111,9 +112,8 @@ onMounted(() => {
     align-items: flex-start;
     justify-content: center;
     width: 100px;
-    height: 100px;
+    height: 50px;
     text-align: center;
-    border-radius: 4px;
     color: #848484;
 }
 

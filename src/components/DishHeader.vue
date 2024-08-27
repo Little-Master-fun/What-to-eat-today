@@ -3,8 +3,7 @@ import { onMounted, ref } from "vue";
 import http from "@/utils/http";
 
 const canteenId = ref(1)
-const src =
-  "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg";
+const src = ref("https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg")
 const dialogFormVisible = ref(false);
 const allCanteen = ref('')
 const canteenName = ref('')
@@ -17,7 +16,7 @@ async function getDish() {
 async function getCanteen() {
   const res = http.get('/canteen/' + canteenId.value)
   canteenName.value = (await res).data.name
-  
+  src.value = (await res).data.image
 }
 async function changeCanteenButton(){
   allCanteen.value = (await http.get('/canteen/all')).data
