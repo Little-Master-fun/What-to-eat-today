@@ -4,57 +4,55 @@ import { useLocalStorage } from '@vueuse/core';
 import { Delete } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { ref } from 'vue';
+import { stopRefresh } from '@/utils/refresh';
+import { useUserState } from '@/composables/state';
 
-const text = {
-    "username" : "lasd"
-}
-const { value, setValue } = useLocalStorage('state=user', '')
 const router = useRouter()
-const user = ref(JSON.parse(localStorage.getItem('state-user')))
+const user = localStorage.getItem('state-user')
+const userinfo = JSON.parse(user)
+const stateUser = useUserState()
 
 
 const Exit = () => {
-  ElMessageBox.confirm(
-    '你确认要退出登入吗',
-    '警告',
-    {
-      confirmButtonText: '确认',
-      cancelButtonText: '取消',
-      type: 'warning',
-    }
-  )
-    .then(() => {
-      ElMessage({
-        type: 'success',
-        message: '成功退出',
-      })
-      localStorage.setItem('state-user', {})
-      user.value = {
-        accesstoken : '',
-            username : ''
-      }
-    })
-    .catch(() => {
-      ElMessage({
-        type: 'info',
-        message: '已取消',
-      })
-    })
+    ElMessageBox.confirm(
+        '你确认要退出登入吗',
+        '警告',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(() => {
+            ElMessage({
+                type: 'success',
+                message: '成功退出',
+            })
+            stateUser.value = {}
+            stopRefresh()
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '已取消',
+            })
+        })
 }
 </script>
 
 <template>
     <div class="userBox">
-        <div v-if="!user.username">
+        <div v-if="!stateUser.username">
             <el-row justify="center" :gutter="12">
                 <el-col :span="9">
                     <div class="block">
-                        <el-avatar :size="100" :src="circleUrl" @click="router.push('/login')"/>
+                        <el-avatar :size="100" @click="router.push('/login')" />
                     </div>
                 </el-col>
                 <el-col :span="15">
                     <div class="userName">
-                        <el-text style="font-size: 24px;margin-top: 10px;" @click="router.push('/login')"><strong>登入/注册</strong></el-text>
+                        <el-text style="font-size: 24px;margin-top: 10px;"
+                            @click="router.push('/login')"><strong>登入/注册</strong></el-text>
                         <el-text style="font-size: 16px;">一花一世界，一叶一菩提</el-text>
                     </div>
                 </el-col>
@@ -64,14 +62,17 @@ const Exit = () => {
             <el-row justify="center" :gutter="12">
                 <el-col :span="9">
                     <div class="block">
-                        <el-avatar :size="100" :src="circleUrl" />
+                        <el-avatar :size="100" :src="stateUser.avatar" />
                     </div>
                 </el-col>
                 <el-col :span="15">
                     <div class="userName">
                         <div style="text-align: center;">
-                            <el-text style="font-size: 24px;margin-top: 10px;"><strong>{{user.username}}</strong></el-text>
-                            <el-icon style="margin-left: 20px;color: brown;" @click="Exit()"><Delete /></el-icon>
+                            <el-text
+                                style="font-size: 24px;margin-top: 10px;"><strong>{{ stateUser.username }}</strong></el-text>
+                            <el-icon style="margin-left: 20px;color: brown;" @click="Exit()">
+                                <Delete />
+                            </el-icon>
                         </div>
                         <el-text style="font-size: 16px;">一花一世界，一叶一菩提</el-text>
                     </div>
@@ -79,7 +80,7 @@ const Exit = () => {
             </el-row>
         </div>
         <el-card class="iconBox">
-            <div style="display: flex;" >
+            <div style="display: flex;">
                 <div class="icon-test" @click="router.push('/collection')">
                     <img src="../components/icon/🦆 icon _star_.png" alt="star">
                     <p>收藏</p>

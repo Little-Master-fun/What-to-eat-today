@@ -6,7 +6,13 @@ import StarRating from "vue-star-rating";
 import { ArrowLeft } from "@element-plus/icons-vue";
 import CommitCard from "@/components/CommitCard.vue";
 import router from "@/router";
+import { EditPen, Star } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useUserState } from "@/composables/state";
 
+const stateUser = useUserState()
+const count = ref(5)
+const centerDialogVisible = ref(false)
 const allCanteen = ref({})
 const route = useRoute()
 const dishId = route.params.dishid
@@ -14,26 +20,68 @@ const dishName = ref('')
 const dishPrice = ref('')
 const dishlocation = ref('')
 const rating = ref(2.5);
+const vote = ref(2.5)
 const Imgsrc = ref(
   "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg"
 );
-const Fooler = ['一层','二层','三层','四层']
+const Fooler = ['一层', '二层', '三层', '四层']
+const comment = ref('')
+const allComment = ref([])
 
 
+
+async function getComment(params) {
+  const res = http.get('/comments/dish/' + dishId)
+  allComment.value = (await res).data
+}
+async function postComment() {
+  http.post('/comments/', {
+    "user_id": stateUser.value.userid,
+    "dish_id": dishId,
+    "content": comment.value,
+    "vote": vote.value,
+  }, {
+    headers: {
+      'Authorization': 'Bearer ' + stateUser.value.accesstoken
+    }
+  }).then(res => {
+    ElMessage({
+      message: '提交成功',
+      type: 'success',
+      plain: true,
+    })
+    centerDialogVisible.value = false
+    comment.value = ''
+
+  }).catch(error => {
+    ElMessage({
+      message: error,
+      type: 'error',
+      plain: true,
+    }),
+      centerDialogVisible.value = false
+  })
+}
+function cancel() {
+  centerDialogVisible.value = false
+  comment.value = ''
+}
+function createComment() {
+  centerDialogVisible.value = true
+}
 async function dishLocation(i) {
   const res = http.get('/canteen/all')
   allCanteen.value = (await res).data
   dishPrice.value = i.price
-  const dishFloor = Fooler[i.floor]  
-  dishlocation.value = allCanteen.value[i.canteen].name + dishFloor +i.window + '号窗口'
+  const dishFloor = Fooler[i.floor]
+  dishlocation.value = allCanteen.value[i.canteen - 1].name + dishFloor + i.window + '号窗口'
 }
-
-
 async function getDetailDish() {
   const res = http.get('/dish/' + dishId)
   rating.value = (await res).data.average_vote
   dishName.value = (await res).data.name
   dishLocation((await res).data)
+  Imgsrc.value = (await res).data.image
 }
 
 
@@ -43,14 +91,15 @@ const load = () => {
 
 onMounted(() => {
   getDetailDish()
+  getComment()
 })
 </script>
 
 <template>
   <div class="headerImg">
-    <el-icon size="30" class="backButton" @click="router.go(-1)"
-      ><ArrowLeft
-    /></el-icon>
+    <el-icon size="30" class="backButton" @click="router.go(-1)">
+      <ArrowLeft />
+    </el-icon>
     <el-image :src="Imgsrc" style="height: 30.8vh; width: 100vw" />
   </div>
   <div>
@@ -67,57 +116,121 @@ onMounted(() => {
             <div>
               <el-text style="">{{ dishlocation }}</el-text>
             </div>
-        </div>
-        <div style="flex: 1;">
-          <star-rating
-            :rating="rating"
-            :increment="0.5"
-            :star-size="30"
-            active-color="#FEDE00"
-            :read-only="true"
-            :show-rating="false"
-            :rtl="true"
-          ></star-rating>
-          <el-text class="point">{{ rating }}</el-text>
-        </div>
+          </div>
+          <div style="flex: 1;">
+            <star-rating :rating="rating" :increment="0.1" :star-size="30" active-color="#FEDE00" :show-rating="false"
+              :rtl="true"></star-rating>
+            <el-text class="point">{{ rating.toFixed(1) }}</el-text>
+          </div>
 
         </div>
       </el-card>
       <el-card class="commitBox">
         <template #header>
-          <el-text style="color: black; font-size: medium">评论</el-text>
+          <div style="display: flex; justify-content: space-between;">
+            <div>
+              <el-text style="color: black; font-size: medium">评论</el-text>
+
+            </div>
+            <div>
+              <el-icon @click="createComment()">
+                <EditPen />
+              </el-icon>
+              <el-icon style="margin-left: 20px;">
+                <Star />
+              </el-icon>
+            </div>
+
+          </div>
         </template>
-        <div>
-          <ul
-            v-infinite-scroll="load"
-            class="infinite-list"
-            style="overflow: auto"
-          >
-            <li v-for="i in 10" :key="i" class="infinite-list-item">
-              <CommitCard></CommitCard>
+        <div style="overflow: hidden;">
+          <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
+            <li v-for="i in allComment" :key="i.id" class="infinite-list-item">
+              <CommitCard :comments="i"></CommitCard>
             </li>
+            <div class="divider">
+              <span class="divider-text">没有更多评论啦</span>
+            </div>
           </ul>
         </div>
       </el-card>
     </el-card>
   </div>
+  <el-card class="createComment" v-if="centerDialogVisible">
+    <template #header>
+      <el-text>评论</el-text>
+    </template>
+    <el-form label-width="auto" size="large">
+      <el-form-item label="评论">
+        <el-input v-model="comment" type="textarea" :row="2" :autosize="{ minRows: 4, maxRows: 6 }"
+          placeholder="(๑˃̵ᴗ˂̵)و写下你对这道菜的看法吧" />
+      </el-form-item>
+      <el-form-item label="评分">
+        <star-rating :rating="vote" :increment="0.5" :star-size="20" active-color="#FEDE00"
+          :show-rating="false"></star-rating>
+      </el-form-item>
+      <el-form-item>
+        <div style="flex: 1;padding-left: 20px;">
+          <el-button @click="cancel()">取消</el-button>
+        </div>
+        <div style="flex: 1;text-align: right;padding-right: 20px;">
+          <el-button @click="postComment()" type="primary">提交评论</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
+  </el-card>
 </template>
 
 <style scoped>
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: #d9d9d9;
+  position: relative;
+  margin: 20px 0;
+}
+
+.divider-text {
+  position: absolute;
+  text-align: center;
+  top: -10px;
+  font-size: 15px;
+  background-color: white;
+  padding: 0 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+  scrollbar-width: none;
+}
+
+.createComment {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+}
+
 .infinite-list {
-  height: 35.5vh;
+  height: 30vh;
   overflow: hidden;
 }
 
 .commitBox {
   margin-top: 1vh;
-  min-height: 43vh;
+  min-height: 40vh;
 }
+
 .starBox {
   width: 100vw;
   height: 20vh;
   border-radius: 10px 10px 0px 0px;
 }
+
 .dishDetial {
   position: absolute;
   top: 29vh;
@@ -125,6 +238,7 @@ onMounted(() => {
   height: 63.9vh;
   border-radius: 10px 10px 0px 0px;
 }
+
 .point {
   position: absolute;
   right: 7vw;
@@ -132,6 +246,7 @@ onMounted(() => {
   font-weight: 600;
   color: #fede00;
 }
+
 .backButton {
   position: absolute;
   z-index: 1;

@@ -1,17 +1,18 @@
 <script setup>
 import router from '@/router';
 import { ref } from 'vue';
-import { useUserState } from '@/composables/state';
+import { footerIndex } from '@/composables/state';
 
+const footerindex = footerIndex()
 const navItems = [
   { id: 1, name: '首页', icon: '/src/components/icon/Frame%20(2).png', path: '/' },
   { id: 2, name: '菜品', icon: '/src/components/icon/Frame%20(1).png', path: '/dish' },
   { id: 3, name: '我的', icon: '/src/components/icon/Group.png', path: '/user' },
 ];
-const footerIndex = useUserState('footerIndex', 1)
+
 
 function handleClick(i) {
-  footerIndex.value = i.id
+  footerindex.value = i.id
   router.push(i.path)
 }
 </script>
@@ -22,7 +23,7 @@ function handleClick(i) {
     <div class="selectBox">
       <el-row justify=center>
         <el-col :span="6" v-for="item in navItems" :key="item.id">
-          <el-button type="primary" :class="{ active: footerIndex == item.id }" @click="handleClick(item)"
+          <el-button type="primary" :class="{ active: footerindex == item.id }" @click="handleClick(item)"
             color="rgba(0, 0, 0, 0)" size="large" circle>
             <div style="display: flex; flex-direction: column;align-items: center;">
               <img width="18px" :src="item.icon" style="display: block;" />

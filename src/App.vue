@@ -5,7 +5,7 @@ import Main from "./components/Main.vue"
 import Footer from "./components/Footer.vue"
 
 export default {
-  components:{
+  components: {
     Header,
     Main,
     Footer
@@ -25,14 +25,15 @@ export default {
 </template>
 
 <style scoped>
-.common-layout{
+.common-layout {
   width: 100%;
   height: 100vh;
   position: relative;
   /* background-color: #FFDB4A; */
   background: linear-gradient(to bottom, #FFE062, #F5F5F5);
 }
-.el-footer{
+
+.el-footer {
   height: 7.1vh;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -40,5 +41,4 @@ export default {
   position: absolute;
   bottom: 0px;
 }
-
 </style>

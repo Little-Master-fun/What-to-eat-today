@@ -4,13 +4,15 @@ import { ElMessage } from 'element-plus'
 import { useRouter } from "vue-router";
 import { reactive, ref } from 'vue';
 import http from "@/utils/http";
-import { useLocalStorage } from "@vueuse/core";
+import { useUserState } from "@/composables/state";
+import { refreshToken } from "@/utils/refresh";
 
 const router = useRouter()
 const register = ref(false)
+const stateUser = useUserState()
 const form = ref({
-    username: "LittleMaster",
-    password: "123456",
+    username: "",
+    password: "",
     passwordAgine: ''
 })
 
@@ -69,33 +71,30 @@ async function handleLogin() {
             'Content-Type': 'application/x-www-form-urlencoded'
         }
     }).then(response => {
-        const stateUser = useLocalStorage('state-user', {
-            accesstoken: '',
-            username: ''
-        })
 
-        stateUser.value = {
-            accesstoken: response.data.access_token,
-            refresh: response.data,
-            username: form.value.username,
-        }
-        http.get('/users/me', null, {
+        http.get('/users/me', {
             headers: {
-               'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImlzX2FkbWluIjp0cnVlLCJleHAiOjE3MjQ3MjAwNDZ9.NI_VbQkScQWMiJJIKCiUaRVMCJ6TT4hJGtW6moKHgLM'
+                'Authorization': 'Bearer ' + response.data.access_token
             }
         }).then(res => {
-            console.log(res);
-
-        }
-
-        )
-        console.log(stateUser);
-        ElMessage({
-            message: '登入成功',
-            type: 'success',
-            plain: true,
+            // stateUser.value.userid = res.data.id
+            // stateUser.value.avatar = res.data.image  
+            stateUser.value = {
+                accesstoken: response.data.access_token,
+                refresh: response.data,
+                username: form.value.username,
+                userid: res.data.id,
+                avatar: res.data.image
+            }
+            ElMessage({
+                message: '登入成功',
+                type: 'success',
+                plain: true,
+            })
+            router.go(-1)
+            refreshToken()
         })
-        router.go(-1)
+
     }).catch(error => {
         console.error('请求出错:', error);
         ElMessage({

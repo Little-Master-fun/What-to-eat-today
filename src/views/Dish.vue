@@ -1,6 +1,4 @@
 <script setup>
-import DishHeader from "../components/DishHeader.vue";
-import DishMenu from "../components/DishMenu.vue";
 import DishPresentation from "../components/DishPresentation.vue";
 import http from "@/utils/http";
 import { onMounted, ref } from "vue";
@@ -21,7 +19,6 @@ const dishes = ref([])
 
 
 async function getWindowDish(wdi) {
-  console.log(wdi);
   if (wdi) {
     const res = http.get('/dish/' + canteenId.value + '/' + selectFloor.value + '/' + wdi)
     dishes.value = (await res).data
@@ -107,7 +104,7 @@ const dish = 50;
       <el-dialog v-model="dialogFormVisible" title="更换食堂" width="80vw">
         <div class="iconBox">
           <div class="icon-test" v-for="canteen in allCanteen" @click="changeCanteen(canteen.id)">
-            <img src="../components/icon/🦆 icon _star_.png" alt="star" />
+            <el-image :src="canteen.icon" alt="star" />
             <p>{{ canteen.name }}</p>
           </div>
         </div>

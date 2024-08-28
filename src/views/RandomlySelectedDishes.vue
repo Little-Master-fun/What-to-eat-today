@@ -5,10 +5,12 @@ import http from "@/utils/http";
 import "animate.css";
 
 const route = useRoute();
+const randomdish = ref({
+  name: '随机选菜',
+  id: 1
+})
 const router = useRouter()
 const canteenId = route.params.canteenid;
-const dishName = ref("随机选菜");
-const dishId = ref('')
 const isRandomizing = ref(false);
 const intervalId = ref(null);
 const intervalDish1 = ref(null);
@@ -25,16 +27,13 @@ async function getallDish() {
 }
 const randomDish = () => {
   const randomIndex = Math.floor(Math.random() * dishes.value.length);
-  const randomdish = dishes.value[randomIndex]
-  dishName.value = randomdish.name;
-  dishId.value = randomdish.id
-  console.log(dishId.value);
-  
+  randomdish.value = dishes.value[randomIndex]
+
 };
 
 const getRandomDish = () => {
   const randomIndex = Math.floor(Math.random() * dishes.value.length);
-  const dish = dishName.value = dishes.value[randomIndex].name
+  const dish = dishes.value[randomIndex].name
   return (dish)
 }
 
@@ -109,7 +108,7 @@ onMounted(() => {
           color: #ff9900;
           position: relative;
           z-index: 2;
-        " @click="router.push('/detail/' + dishId)">{{ dishName }}</el-text>
+        " @click="router.push('/detail/' + randomdish.id)">{{ randomdish.name }}</el-text>
       <el-button @click="toggleRandom(), getRandomDish()" round class="starButton">{{
         isRandomizing ? "停止选菜" : "开始选菜"
       }}</el-button>

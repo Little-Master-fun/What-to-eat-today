@@ -12,41 +12,41 @@ import FeedBack from '@/views/FeedBack.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes: [ 
+  routes: [
     {
-      path:'/',
-      component:Home,
+      path: '/',
+      component: Home,
     },
     {
-      path:'/user',
-      component:User
+      path: '/user',
+      component: User
     },
     {
-      path:'/dish',
-      component:Dish
+      path: '/dish',
+      component: Dish
     },
     {
-      path:'/randomDish/:canteenid',
-      component:RandomDish
+      path: '/randomDish/:canteenid',
+      component: RandomDish
     },
     {
-      path:'/detail/:dishid?',
-      component:DetailDish
+      path: '/detail/:dishid?',
+      component: DetailDish
     },
     {
-      path:'/search/:canteenId/:searchData?',
-      component:SearchDish
+      path: '/search/:canteenId/:searchData?',
+      component: SearchDish
     },
     {
-      path:'/collection',
-      component:Collection
+      path: '/collection',
+      component: Collection
     },
     {
-      path:'/login',
-      component:Login
+      path: '/login',
+      component: Login
     },
     {
-      path:'/feedback',
+      path: '/feedback',
       component: FeedBack
     }
   ],
