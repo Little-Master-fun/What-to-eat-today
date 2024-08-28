@@ -20,7 +20,7 @@ const props = defineProps({
                 <el-icon style="font-size: 2.3vh;">
                     <Location />
                 </el-icon>
-                <el-text class="mx-1" size="small">山东大学（兴隆山校区）</el-text>
+                <el-text class="mx-1" size="small">山东大学（中心校区）</el-text>
             </el-col>
         </el-row>
         <el-row>
