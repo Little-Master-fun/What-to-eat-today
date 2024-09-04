@@ -154,8 +154,6 @@ onMounted(() => {
 .starButton:hover,
 .starButton:focus {
   background-color: #ffdb4a;
-  /* 恢复初始背景色，取消点击时的颜色变化 */
   color: initial;
-  /* 恢复初始文字颜色，取消点击时的颜色变化 */
 }
 </style>

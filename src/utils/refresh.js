@@ -16,16 +16,22 @@ for (let key in stateUser.value.refresh) {
 
 let timer
 export function refreshToken() {
-    const refresh = {}
-    for (let key in stateUser.value.refresh) {
-        refresh[`"${key}"`] = stateUser.value.refresh[key];
+    const refresh = {
+        "access_token": stateUser.value.refresh.access_token,
+        "token_type": "bearer",
+        "refresh_token": stateUser.value.refresh.refresh_token
     }
     console.log(refresh);
-
-    const res = http.post('/users/token/refresh', refresh)
-    stateUser.value.accesstoken = res.data.access_token
-    stateUser.value.refresh = res.data
-    console.log('发送刷新令牌请求');
+    
+    http.post('/users/token/refresh', stateUser.value.refresh).then(res => {
+        stateUser.value.refresh = res.data
+        stateUser.value.accesstoken = res.data.access_token
+        console.log('刷新令牌成功');
+        
+    }).catch(error => {
+        console.log(error);
+        
+    })
 
 }
 

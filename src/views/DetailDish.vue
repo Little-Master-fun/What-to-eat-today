@@ -29,7 +29,28 @@ const comment = ref('')
 const allComment = ref([])
 
 
-
+async function addMark(params) {
+  http.post('/marks',{
+  "dish_id": dishId,
+  "user_id": stateUser.value.userid,
+},{
+  headers: {
+    'Authorization': 'Bearer ' + stateUser.value.accesstoken
+  }
+}).then(res => {
+  ElMessage({
+      message: '收藏成功',
+      type: 'success',
+      plain: true,
+    })
+}).catch(error => {
+  ElMessage({
+      message: '请登入或登入已过期',
+      type: 'success',
+      plain: true,
+    })
+})
+}
 async function getComment(params) {
   const res = http.get('/comments/dish/' + dishId)
   allComment.value = (await res).data
@@ -55,7 +76,7 @@ async function postComment() {
 
   }).catch(error => {
     ElMessage({
-      message: error,
+      message: '请登入或登入已过期',
       type: 'error',
       plain: true,
     }),
@@ -136,7 +157,7 @@ onMounted(() => {
               <el-icon @click="createComment()">
                 <EditPen />
               </el-icon>
-              <el-icon style="margin-left: 20px;">
+              <el-icon style="margin-left: 20px;" @click="addMark()">
                 <Star />
               </el-icon>
             </div>

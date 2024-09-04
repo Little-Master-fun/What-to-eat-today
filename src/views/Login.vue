@@ -11,8 +11,8 @@ const router = useRouter()
 const register = ref(false)
 const stateUser = useUserState()
 const form = ref({
-    username: "",
-    password: "",
+    username: "LittleMaster",
+    password: "123456",
     passwordAgine: ''
 })
 
@@ -77,6 +77,8 @@ async function handleLogin() {
                 'Authorization': 'Bearer ' + response.data.access_token
             }
         }).then(res => {
+            console.log(response.data);
+            
             // stateUser.value.userid = res.data.id
             // stateUser.value.avatar = res.data.image  
             stateUser.value = {
@@ -92,7 +94,7 @@ async function handleLogin() {
                 plain: true,
             })
             router.go(-1)
-            refreshToken()
+            setInterval(refreshToken(), 20 * 60 * 1000);
         })
 
     }).catch(error => {

@@ -86,14 +86,11 @@ onMounted(() => {
 .dividers::before,
 .dividers::after {
   background-color: transparent;
-  /* 去除默认的分割线背景 */
 }
 
 .dividers.el-divider__text {
   background-color: #835858 !important;
-  /* 设置中间文本的背景颜色，您可以根据需求修改 */
   padding: 0 10px;
-  /* 增加文本的内边距，可根据需要调整 */
 }
 
 .header {
@@ -192,10 +189,6 @@ onMounted(() => {
   justify-content: center;
 }
 
-.el-card {
-  padding: 10px;
-  /* 您可以将 20px 替换为您想要的具体值，如 10px、30px 等  */
-}
 
 .dishCard {
   padding-right: 0px !important;
@@ -210,7 +203,6 @@ onMounted(() => {
 
 .el-menu-item.is-active {
   background-color: #ffffff;
-  /* 将 #007BFF 替换为您想要的背景颜色值 */
 }
 
 .el-aside::-webkit-scrollbar {

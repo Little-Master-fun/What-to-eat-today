@@ -5,13 +5,18 @@ import { onMounted, ref } from "vue";
 import http from "@/utils/http";
 import { ElMessage } from 'element-plus'
 import { useUserState } from "@/composables/state";
+import Dishcard20 from "@/components/Dishcard2.0.vue";
+
 
 const stateUser = useUserState()
 const selectedNav = ref("home");
 const allCanteen = ref('')
 const selectCanteen = ref(1)
-
-console.log(typeof stateUser.value.accesstoken);
+const marks = ref([])
+const count = ref(0)
+const load = () => {
+  count.value += 2
+}
 
 
 async function getMark() {
@@ -20,10 +25,11 @@ async function getMark() {
       'Authorization': 'Bearer ' + stateUser.value.accesstoken
     }
   }).then(res => {
-
+    console.log(res.data);
+    marks.value = res.data
   }).catch(error => {
     ElMessage({
-      message: '登入已过期，请重新登入',
+      message: '登入已过期或未登入，请重新登入',
       type: 'error',
       plain: true,
     })
@@ -60,7 +66,7 @@ onMounted(() => {
         </el-col>
       </el-row>
     </template>
-
+    <!-- 头部食堂menu，后端未开发 -->
     <!-- <el-scrollbar style="overflow: hidden;">
       <div class="scrollbar-flex-content">
         <p v-for="i in allCanteen" :key="i.id" class="scrollbar-demo-item" :class="{active: selectCanteen === i.id}">
@@ -69,6 +75,11 @@ onMounted(() => {
       </div>
     </el-scrollbar> -->
     <el-card class="collectionDish">
+      <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
+          <li v-for="i in marks" :key="i.id" class="infinite-list-item">
+            <Dishcard20 :dishid=i.dish_id></DishCard20>
+          </li>
+        </ul>
 
     </el-card>
   </el-card>
