@@ -72,7 +72,6 @@ onMounted(() => {
 
 <style scoped>
 .commitCard {
-    width: 100vw;
     display: flex;
     flex-direction: row;
     text-align: left;

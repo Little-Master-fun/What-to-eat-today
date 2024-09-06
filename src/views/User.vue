@@ -11,6 +11,7 @@ const router = useRouter()
 const user = localStorage.getItem('state-user')
 const userinfo = JSON.parse(user)
 const stateUser = useUserState()
+const avatar = ref('https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png')
 
 
 const Exit = () => {
@@ -46,7 +47,7 @@ const Exit = () => {
             <el-row justify="center" :gutter="12">
                 <el-col :span="9">
                     <div class="block">
-                        <el-avatar :size="100" @click="router.push('/login')" />
+                        <el-avatar :size="100" @click="router.push('/login')" src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                     </div>
                 </el-col>
                 <el-col :span="15">
@@ -62,7 +63,7 @@ const Exit = () => {
             <el-row justify="center" :gutter="12">
                 <el-col :span="9">
                     <div class="block">
-                        <el-avatar :size="100" :src="stateUser.avatar" />
+                        <el-avatar :size="100" :src="avatar" />
                     </div>
                 </el-col>
                 <el-col :span="15">

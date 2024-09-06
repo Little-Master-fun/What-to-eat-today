@@ -49,7 +49,7 @@ const router = createRouter({
       path: '/feedback',
       component: FeedBack
     }
-  ],
+  ]
 })
 
 export default router

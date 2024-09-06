@@ -50,7 +50,7 @@ onMounted(() => {
         <el-row>
           <el-col :span="9" style="display: grid; place-items: center">
             <el-image style="width: 31.8vw; border-radius: 5px; height: 8.6vh"
-              src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg" />
+              src="https://p26-official-plugin-sign.byteimg.com/tos-cn-i-5jbd59dj06/2ff8f6d1a88d480eabccd0d7bbc4c9e1~tplv-5jbd59dj06-image.png?lk3s=8c875d0b&x-expires=1757133276&x-signature=JpUXemOc7JrVhOSC9ANSRiCCW68%3D" />
           </el-col>
           <el-col :span="15" style="">
             <el-row>

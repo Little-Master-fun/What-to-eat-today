@@ -29,7 +29,7 @@ const comment = ref('')
 const allComment = ref([])
 
 
-async function addMark(params) {
+async function addMark() {
   http.post('/marks',{
   "dish_id": dishId,
   "user_id": stateUser.value.userid,

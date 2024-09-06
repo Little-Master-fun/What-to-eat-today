@@ -1,6 +1,6 @@
 <script setup>
 import router from '@/router';
-import { ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import { footerIndex } from '@/composables/state';
 
 const footerindex = footerIndex()
@@ -15,6 +15,24 @@ function handleClick(i) {
   footerindex.value = i.id
   router.push(i.path)
 }
+
+function init(){
+  const positionId = router.currentRoute.value
+  console.log(positionId.fullPath)
+  for (let index = 0; index < navItems.length; index++) {
+    // console.log(navItems[index].path)
+    if (navItems[index].path == positionId.fullPath) {
+      footerIndex.value = navItems[index].id
+      console.log("ok")
+      console.log(footerIndex.value)
+    }
+  }
+}
+
+onMounted(() => {
+  init()
+
+})
 </script>
 
 

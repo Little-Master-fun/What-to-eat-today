@@ -4,7 +4,10 @@ import Main from "@/components/Main.vue";
 import { onMounted, ref } from "vue";
 import { HomeFilled } from "@element-plus/icons-vue";
 import http from "@/utils/http";
+import { footerIndex } from "@/composables/state";
 
+const footerindex = footerIndex()
+footerindex.value = 1
 const dialogFormVisible = ref(false);
 const canteenId = ref(1)
 const newDish = ref([])

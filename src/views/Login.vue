@@ -11,8 +11,8 @@ const router = useRouter()
 const register = ref(false)
 const stateUser = useUserState()
 const form = ref({
-    username: "LittleMaster",
-    password: "123456",
+    username: "",
+    password: "",
     passwordAgine: ''
 })
 
@@ -94,7 +94,7 @@ async function handleLogin() {
                 plain: true,
             })
             router.go(-1)
-            setInterval(refreshToken(), 20 * 60 * 1000);
+            setInterval(refreshToken(), 1 * 1000);
         })
 
     }).catch(error => {
