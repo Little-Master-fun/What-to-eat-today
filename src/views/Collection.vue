@@ -66,7 +66,7 @@ onMounted(() => {
         </el-col>
       </el-row>
     </template>
-    <!-- 头部食堂menu，后端未开发 -->
+    <!-- 头部食堂menu，后端接口未开发 -->
     <!-- <el-scrollbar style="overflow: hidden;">
       <div class="scrollbar-flex-content">
         <p v-for="i in allCanteen" :key="i.id" class="scrollbar-demo-item" :class="{active: selectCanteen === i.id}">
@@ -80,12 +80,14 @@ onMounted(() => {
             <Dishcard20 :dishid=i.dish_id></DishCard20>
           </li>
         </ul>
-
     </el-card>
   </el-card>
 </template>
 
 <style scoped>
+.infinite-list-item{
+  margin: 10px 8px;
+}
 .collectionDish {
   height: 84.8vh;
 }

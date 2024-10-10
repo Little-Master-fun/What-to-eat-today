@@ -6,7 +6,7 @@ import StarRating from "vue-star-rating";
 import { ArrowLeft } from "@element-plus/icons-vue";
 import CommitCard from "@/components/CommitCard.vue";
 import router from "@/router";
-import { EditPen, Star } from "@element-plus/icons-vue";
+import { EditPen, Star, StarFilled } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserState } from "@/composables/state";
 
@@ -27,34 +27,83 @@ const Imgsrc = ref(
 const Fooler = ['一层', '二层', '三层', '四层']
 const comment = ref('')
 const allComment = ref([])
+const isMark = ref(false)
+const markId = ref()
 
-
+//添加收藏
 async function addMark() {
-  http.post('/marks',{
-  "dish_id": dishId,
-  "user_id": stateUser.value.userid,
-},{
-  headers: {
-    'Authorization': 'Bearer ' + stateUser.value.accesstoken
-  }
-}).then(res => {
-  ElMessage({
+  http.post('/marks', {
+    "dish_id": dishId,
+    "user_id": stateUser.value.userid,
+  }, {
+    headers: {
+      'Authorization': 'Bearer ' + stateUser.value.accesstoken
+    }
+  }).then(res => {
+    ElMessage({
       message: '收藏成功',
       type: 'success',
       plain: true,
     })
-}).catch(error => {
-  ElMessage({
+    markId.value = res.data.id
+    console.log(markId.value);
+    isMark.value = true
+  }).catch(error => {
+    ElMessage({
       message: '请登入或登入已过期',
+      type: 'error',
+      plain: true,
+    })
+    console.log(error);
+    
+  })
+}
+
+//检查是否收藏
+async function getMark() {
+  http.get('/marks/user/' + stateUser.value.userid, {
+    headers: {
+      'Authorization': 'Bearer ' + stateUser.value.accesstoken
+    }
+  }).then(res => {
+    console.log(res.data);
+    for (let index = 0; index < res.data.length; index++) {
+      if (res.data[index].dish_id == dishId) {
+        isMark.value = true
+        markId.value = res.data[index].id
+      }
+    }
+  })
+}
+//删除收藏
+async function deleteMark(params) {
+  http.delete('/marks/' + markId.value, {
+    headers: {
+      'Authorization': 'Bearer ' + stateUser.value.accesstoken
+    }
+  }).then(res => {
+    ElMessage({
+      message: '取消收藏成功',
       type: 'success',
       plain: true,
     })
-})
+    isMark.value = false
+  }).catch(error => {
+    ElMessage({
+      message: '请登入或登入已过期',
+      type: 'error',
+      plain: true,
+    })
+  })
+
 }
+
+//获取评论
 async function getComment(params) {
   const res = http.get('/comments/dish/' + dishId)
   allComment.value = (await res).data
 }
+//发表评论
 async function postComment() {
   http.post('/comments/', {
     "user_id": stateUser.value.userid,
@@ -106,13 +155,15 @@ async function getDetailDish() {
 }
 
 
+
 const load = () => {
   count.value += 2;
 };
 
 onMounted(() => {
   getDetailDish()
-  getComment()
+  getComment(),
+  getMark()
 })
 </script>
 
@@ -151,15 +202,18 @@ onMounted(() => {
           <div style="display: flex; justify-content: space-between;">
             <div>
               <el-text style="color: black; font-size: medium">评论</el-text>
-
             </div>
             <div>
               <el-icon @click="createComment()">
                 <EditPen />
               </el-icon>
-              <el-icon style="margin-left: 20px;" @click="addMark()">
+              <el-icon style="margin-left: 20px;" @click="deleteMark()" v-if="isMark" size="19">
+                <StarFilled color="#fede00" />
+              </el-icon>
+              <el-icon style="margin-left: 20px;" @click="addMark()" v-else>
                 <Star />
               </el-icon>
+
             </div>
 
           </div>
@@ -177,6 +231,7 @@ onMounted(() => {
       </el-card>
     </el-card>
   </div>
+  <!-- 评论对话框 -->
   <el-card class="createComment" v-if="centerDialogVisible">
     <template #header>
       <el-text>评论</el-text>

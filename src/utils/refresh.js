@@ -7,14 +7,8 @@ let newObj = {};
 for (let key in stateUser.value.refresh) {
     newObj[`"${key}"`] = stateUser.value.refresh[key];
 }
-// let obj = { 1: 'value1', 2: 'value2' };
-// for (let key in obj) {
-//   newObj[key.toString()] = obj[key];
-// }
-// console.log(newObj);
-// console.log(stateUser.value.refresh);
 
-let timer
+
 export function refreshToken() {
     const refresh = {
         "access_token": stateUser.value.refresh.access_token,
@@ -34,6 +28,7 @@ export function refreshToken() {
     })
 
 }
+
 
 export function stopRefresh() {
     clearInterval(timer)

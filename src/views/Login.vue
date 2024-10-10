@@ -95,6 +95,7 @@ async function handleLogin() {
             })
             router.go(-1)
             setInterval(refreshToken(), 1 * 1000);
+            setInterval(console.log(5), 1 * 1000);
         })
 
     }).catch(error => {
